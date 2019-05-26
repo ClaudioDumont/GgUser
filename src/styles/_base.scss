@@ -2,33 +2,82 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap');
 
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 @mixin transition($property: all, $duration: 0.3s, $ease: cubic-bezier(0.175, 0.885, 0.32, 1.275)) {
-    -webkit-transition: $property $duration $ease;
-    -moz-transition: $property $duration $ease;
-    -o-transition: $property $duration $ease;
-    transition: $property $duration $ease;
+  -webkit-transition: $property $duration $ease;
+  -moz-transition: $property $duration $ease;
+  -o-transition: $property $duration $ease;
+  transition: $property $duration $ease;
 }
 
 @mixin breakpoint($point) {
-    @if $point == phablet {
-		@media (max-width: 768px)  { @content ; }
-	}
-	
-	@else if $point == mobileonly {
-		@media (max-width: 414px)  { @content ; }
-	}
+  @if $point == phablet {
+    @media (max-width: 768px)  { @content ; }
+  }	
+  @else if $point == mobileonly {
+    @media (max-width: 414px)  { @content ; }
+  }
 }
 
 $font-title: 'Righteous', cursive;
 
 body {
-    padding: 1em;
-    background: -webkit-linear-gradient(70deg, #85889C  30%, rgba(0,0,0,0) 30%), -webkit-linear-gradient(30deg, #535970 60%, #5B5C75 60%);
-    background: -o-linear-gradient(70deg, #85889C  30%, rgba(0,0,0,0) 30%), -o-linear-gradient(30deg, #535970 60%, #5B5C75 60%);
-    background: -moz-linear-gradient(70deg, #85889C  30%, rgba(0,0,0,0) 30%), -moz-linear-gradient(30deg, #535970 60%, #5B5C75 60%);
-    background: linear-gradient(70deg, #85889C  30%, rgba(0,0,0,0) 30%), linear-gradient(30deg, #535970 60%, #5B5C75 60%);
-    font-family: 'Open Sans', sans-serif;
+  padding: 1em;
+  background: -webkit-linear-gradient(70deg, #85889C  30%, rgba(0,0,0,0) 30%), -webkit-linear-gradient(30deg, #535970 60%, #5B5C75 60%);
+  background: -o-linear-gradient(70deg, #85889C  30%, rgba(0,0,0,0) 30%), -o-linear-gradient(30deg, #535970 60%, #5B5C75 60%);
+  background: -moz-linear-gradient(70deg, #85889C  30%, rgba(0,0,0,0) 30%), -moz-linear-gradient(30deg, #535970 60%, #5B5C75 60%);
+  background: linear-gradient(70deg, #85889C  30%, rgba(0,0,0,0) 30%), linear-gradient(30deg, #535970 60%, #5B5C75 60%);
+  font-family: 'Open Sans', sans-serif;
 }
+
+.container{
+  width: 100%;
+}
+
+.button {
+  padding: 10px;
+  border: none;
+  background: #000;
+  color: #fff;
+  font-size: 20px;
+  font-family: $font-title;
+  text-transform: uppercase;
+  margin: 3em 0 0 0;
+  width: 100%;
+  display: block;
+  text-decoration: none;
+  cursor: pointer;
+  @include transition();
+
+  @include breakpoint(mobileonly) {
+    padding: 15px;
+  }
+
+  &--medium {
+    width: 30%;
+    margin: 0;
+  }
+
+  &--small {
+    width: auto;
+    padding: 5px;
+    font-family: inherit;
+    font-size: 12px;
+    margin: 0 0 .5em 0;
+    display: inline-block;
+    font-weight: bold;
+
+    @include breakpoint(mobileonly) {
+      display: block;
+      text-align: center;
+      padding: 10px;
+    }
+  }
+
+  &:hover {
+    background: #535970;
+  }
+}
+
