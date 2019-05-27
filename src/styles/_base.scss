@@ -38,7 +38,7 @@ body {
 
 .button {
   padding: 10px;
-  border: none;
+  border: solid 2px transparent;
   background: #000;
   color: #fff;
   font-size: 20px;
@@ -53,6 +53,21 @@ body {
 
   @include breakpoint(mobileonly) {
     padding: 15px;
+  }
+
+  &:hover {
+    background: #535970;
+    border-color: #000;
+  }
+
+  &--back {
+    position: absolute;
+    top: 20px;
+    right: 0;
+    
+    &:hover {
+      border-color: transparent;
+    }
   }
 
   &--medium {
@@ -74,10 +89,6 @@ body {
       text-align: center;
       padding: 10px;
     }
-  }
-
-  &:hover {
-    background: #535970;
   }
 }
 

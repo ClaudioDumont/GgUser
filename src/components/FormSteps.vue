@@ -1,5 +1,9 @@
 <template>
   <section class="content content--right">
+    <a @click="step = 2" class="button button--small button--back" v-if="step === 4 && getInfo">
+      Make new consulting
+    </a>
+
     <section id="step-one" class="container" v-if="step === 1">
       <h3 class="step__title">
         Hey, how are you?!?!
@@ -108,67 +112,61 @@
         </button>
       </div>
     </section>
-
-    <section id="step-four" class="container" v-if="step === 4">
+    <section class="container" v-if="step === 4 && !getInfo">
+      <h3 class="step__title">
+        Loading ......
+      </h3>
+    </section>
+    <section id="step-four" class="container" v-if="step === 4 && getInfo">
       <h3 class="step__title">
         I Get You!!
       </h3>
       <section class="user">
         <header class="user__header">
           <div class="user__image__container">
-            <img src="https://avatars2.githubusercontent.com/u/8548115?v=4" alt="Claudio Dumont" class="user__image">
+            <img :src="user.avatar_url" :alt="user.name" class="user__image" target="_blank">
           </div>
           <div class="user__info__container">
             <h4 class="user__name">
-              Claudio Dumont
+              {{user.name}}
             </h4>
-            <a href="#" class="button button--small">
+            <a :href="user.html_url" target="_blank" class="button button--small">
               View in GitHub
             </a>
             <ul class="user__labels">
-              <li class="user__info">Florianópolis - SC</li>
-              <li class="user__info">5 Followers</li>
-              <li class="user__info">7 Following</li>
+              <li class="user__info">{{user.location}}</li>
+              <li class="user__info">{{user.followers}} Followers</li>
+              <li class="user__info">{{user.following}} Following</li>
             </ul>
-            <p class="user__bio">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sunt vel autem asperiores a veritatis voluptate.
+            <p class="user__bio" v-if="user.bio">
+              {{user.bio}}
+            </p>
+            <p class="user__bio" v-else>
+              How! you do have a bio/description by yourself, think in something, bio help people to know you!!
             </p>
           </div>
+
+          
         </header>
         <section>
             <h4 class="step__title step__title--secondary">
               Your Repos
             </h4>
             <ul class="repos__list">
-              <li class="repos__item">
-                <a href="#" class="repos__link">
-                  Lorem ipsum
+              <li class="repos__item" v-for="repo in repos" :key="repo.id">
+                <a :href="repo.html_url" target="_blank" class="repos__link">
+                  {{repo.name}}
                 </a>
-                <p class="repos__stars">3 Stars</p>
+                <p class="repos__stars">
+                  {{repo.stargazers_count}}
+                    <span v-if="repo.stargazers_count <= 1">Star</span>
+                    <span v-if="repo.stargazers_count > 1">Stars</span>
+                  </p>
               </li>
             </ul>
           </section>
       </section>
     </section>
-
-    <!-- <div class="button__container" v-if="step > 1">
-      <button
-        class="button button--medium"
-        @click="prevStage">
-          Prev
-        </button>
-      <button
-        class="button button--medium"
-        @click="nextStage"
-        v-if="(step == 2 && !$v.formResponseStepOne.$invalid) || (step == 3 && !$v.formResponseStepTwo.$invalid)">
-          Next
-      </button>
-      <button @click="getUserInfo(formResponseStepOne.userName)" class="button button--medium" v-if="step == 3 && !$v.formResponseStepOne.$invalid && !$v.formResponseStepTwo.$invalid">
-        View Github Info
-      </button>
-    </div> -->
-    <!-- <button @click="getUserInfo">Vai GgUser</button>
-      Info do user:{{user}} -->
   </section>
 </template>
 
@@ -181,6 +179,7 @@ export default {
   data() {
     return {
       step: 1,
+      getInfo: false,
       user: [],
       repos: [],
       formResponseStepOne: {
@@ -200,24 +199,41 @@ export default {
   },
   methods: {
     nextStage () {
-      this.step++
+      if(this.step < 4) {
+        this.step++
+      }
+      
     },
     prevStage () {
       this.step--
     },
 
     getUserInfo (userName) {
-      this.nextStage();
-      axios.get(`https://api.github.com/users/${userName}`)
-      .then((response) => {
-        this.user = response.data
-      }),
-
+      
       axios.get(`https://api.github.com/users/${userName}/repos`)
       .then((response) => {
         this.repos = response.data
-        console.log(this.repos)
+        this.getInfo = true;
       })
+      .catch((error) => {
+        console.log(error);
+      })
+      .then(() => {
+        this.nextStage();
+      });  
+
+
+      axios.get(`https://api.github.com/users/${userName}`)
+      .then((response) => {
+        this.user = response.data
+        this.getInfo = true;
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+      .then(() => {
+        this.nextStage();
+      });
     }
   },
 

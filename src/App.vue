@@ -16,20 +16,6 @@ export default {
   components: {
     SidebarSteps,
     FormSteps
-  },
-
-  data () {
-    return {
-      
-    }
-  },
-
-  props: {
-    
-  },
-
-  methods: {
-    
   }
 }
 </script>
@@ -43,7 +29,7 @@ export default {
   min-height: calc(100vh - 2em);
   justify-content: center;
   align-items: center;
-  
+
   &__content {
     max-width: 980px;
     min-height: 680px;
@@ -67,6 +53,7 @@ export default {
   align-items: center;
   justify-content: center;
   padding: 3em 2em;
+  position: relative;
 
   &--left {
     width: 40%;
@@ -82,6 +69,4 @@ export default {
     padding: 1em;
   }
 }
-
-
 </style>
