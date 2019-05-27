@@ -8,8 +8,6 @@
 </template>
 
 <script>
-
-import axios from 'axios'
 import SidebarSteps from './components/SidebarSteps.vue'
 import FormSteps from './components/FormSteps.vue'
 
@@ -22,8 +20,7 @@ export default {
 
   data () {
     return {
-      user: [],
-      repos: []
+      
     }
   },
 
@@ -32,19 +29,7 @@ export default {
   },
 
   methods: {
-    getUserInfo () {
-      axios.get('https://api.github.com/users/viniciuskneves')
-      .then((response) => {
-        this.user = response.data
-        console.log(this.user)
-      }),
-
-      axios.get('https://api.github.com/users/viniciuskneves/repos')
-      .then((response) => {
-        this.repos = response.data
-        console.log(this.repos)
-      })
-    }
+    
   }
 }
 </script>

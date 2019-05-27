@@ -45,6 +45,19 @@
         </label>
         <input type="text" v-model="$v.formResponseStepOne.userName.$model"  class="form__input">
       </section>
+      <div class="button__container">
+        <button
+          class="button button--medium"
+          @click="prevStage">
+            Prev
+          </button>
+        <button
+          class="button button--medium"
+          @click="nextStage"
+          v-if="!$v.formResponseStepOne.$invalid">
+            Next
+        </button>
+      </div>
     </section>
 
     <section id="step-tree" class="container" v-if="step === 3">
@@ -79,6 +92,21 @@
           </label>
         </div>
       </section>
+      <div class="button__container">
+        <button
+          class="button button--medium"
+          @click="prevStage">
+            Prev
+          </button>
+
+        <button
+          @click="getUserInfo(formResponseStepOne.userName)"
+          class="button button--medium"
+          v-if="!$v.formResponseStepOne.$invalid && !$v.formResponseStepTwo.$invalid"
+        >
+          View Github Info
+        </button>
+      </div>
     </section>
 
     <section id="step-four" class="container" v-if="step === 4">
@@ -123,7 +151,7 @@
       </section>
     </section>
 
-    <div class="button__container" v-if="step > 1">
+    <!-- <div class="button__container" v-if="step > 1">
       <button
         class="button button--medium"
         @click="prevStage">
@@ -134,15 +162,18 @@
         @click="nextStage"
         v-if="(step == 2 && !$v.formResponseStepOne.$invalid) || (step == 3 && !$v.formResponseStepTwo.$invalid)">
           Next
-        </button>
-    </div>
+      </button>
+      <button @click="getUserInfo(formResponseStepOne.userName)" class="button button--medium" v-if="step == 3 && !$v.formResponseStepOne.$invalid && !$v.formResponseStepTwo.$invalid">
+        View Github Info
+      </button>
+    </div> -->
     <!-- <button @click="getUserInfo">Vai GgUser</button>
       Info do user:{{user}} -->
   </section>
 </template>
 
 <script>
-
+import axios from 'axios'
 import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
 
 export default {
@@ -150,6 +181,8 @@ export default {
   data() {
     return {
       step: 1,
+      user: [],
+      repos: [],
       formResponseStepOne: {
         name: '',
         lastName: '',
@@ -171,6 +204,20 @@ export default {
     },
     prevStage () {
       this.step--
+    },
+
+    getUserInfo (userName) {
+      this.nextStage();
+      axios.get(`https://api.github.com/users/${userName}`)
+      .then((response) => {
+        this.user = response.data
+      }),
+
+      axios.get(`https://api.github.com/users/${userName}/repos`)
+      .then((response) => {
+        this.repos = response.data
+        console.log(this.repos)
+      })
     }
   },
 
