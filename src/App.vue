@@ -58,7 +58,7 @@ export default {
   &--left {
     width: 40%;
     background: #85889C;
-    z-index: 999;
+    z-index: 9;
   }
 
   &--right {

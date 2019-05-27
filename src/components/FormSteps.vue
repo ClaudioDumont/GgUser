@@ -1,6 +1,6 @@
 <template>
   <section class="content content--right">
-    <a @click="step = 2" class="button button--small button--back" v-if="step === 4 && getInfo">
+    <a @click="step = 2" class="button button--small button--back" v-if="(step === 4 && getInfo) || showError">
       Make new consulting
     </a>
 
@@ -67,7 +67,6 @@
       </section>
     
 
-    
       <section id="step-three" class="container" v-if="step === 3" key="step-three">
         <h3 class="step__title">
           So far, so good... But i need your email and your agree to terms of use
@@ -112,7 +111,7 @@
             class="button button--medium"
             v-if="!$v.formResponseStepOne.$invalid && !$v.formResponseStepTwo.$invalid"
           >
-            View Github Info
+            Git Info
           </button>
         </div>
       </section>
@@ -135,7 +134,8 @@
                 View in GitHub
               </a>
               <ul class="user__labels">
-                <li class="user__info">{{user.location}}</li>
+                <li class="user__info" v-if="user.location">{{user.location}}</li>
+                <li class="user__info" v-else>Undefined Location</li>
                 <li class="user__info">{{user.followers}} Followers</li>
                 <li class="user__info">{{user.following}} Following</li>
               </ul>
@@ -151,7 +151,10 @@
           </header>
           <section>
               <h4 class="step__title step__title--secondary">
-                Your Repos
+                Your Repos 
+                <span v-if="repos.length > 0">
+                  ({{repos.length}})
+                </span>
               </h4>
               <ul class="repos__list">
                 <li class="repos__item" v-for="repo in repos" :key="repo.id">
@@ -168,6 +171,16 @@
             </section>
         </section>
       </section>
+
+      <section class="container" v-if="showError" key="show-error">
+        <h3 class="step__title">
+          Uh oh.
+        </h3>
+        <img src="https://cdn-media-1.freecodecamp.org/images/bamlgwPuXXB-fnXeFEZmDDKpFyORz8ZacX23" height="150" alt="">
+        <p>
+          The user you requested could not be found. Is there any chance you were wrong when you pass the user to me
+        </p>
+      </section>
     </transition>
   </section>
 </template>
@@ -182,6 +195,7 @@ export default {
     return {
       step: 1,
       getInfo: false,
+      showError: false,
       user: [],
       repos: [],
       formResponseStepOne: {
@@ -219,6 +233,7 @@ export default {
       })
       .catch((error) => {
         console.log(error);
+        this.showError = true;
       })
       .then(() => {
         this.nextStage();
@@ -232,6 +247,7 @@ export default {
       })
       .catch((error) => {
         console.log(error);
+        this.showError = true;
       })
       .then(() => {
         this.nextStage();

@@ -53,7 +53,8 @@ body {
   @include transition();
 
   @include breakpoint(mobileonly) {
-    padding: 15px;
+    padding: 5px;
+    font-size: 14px;
   }
 
   &:hover {
@@ -92,8 +93,16 @@ body {
     &:hover {
       border-color: transparent;
     }
-  }
 
+    @include breakpoint(mobileonly) {
+      padding: 5px;
+      width: 80px;
+      text-align: right;
+      top: -20px;
+      z-index: 99;
+
+    }
+  }
 }
 
 .slide-fade-enter-active {
