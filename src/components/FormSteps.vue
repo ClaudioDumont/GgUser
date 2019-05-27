@@ -18,16 +18,32 @@
       <section class="form__content">
         <label for="" class="form__label">
           Name:
+          <p class="error" v-if="!$v.formResponseStepOne.name.required">this field is required</p>
+          <p
+            class="error"
+            v-if="!$v.formResponseStepOne.name.minLength">
+              Field must have at least {{ $v.formResponseStepOne.name.$params.minLength.min }} characters.
+          </p>
         </label>
-        <input type="text" class="form__input">
+        <input 
+          type="text"
+          v-model="$v.formResponseStepOne.name.$model"
+          class="form__input">
         <label for="" class="form__label">
           Last Name:
+          <p class="error" v-if="!$v.formResponseStepOne.lastName.required">this field is required</p>
+          <p
+            class="error"
+            v-if="!$v.formResponseStepOne.lastName.minLength">
+              Field must have at least {{ $v.formResponseStepOne.lastName.$params.minLength.min }} characters.
+          </p>
         </label>
-        <input type="text" class="form__input">
+        <input type="text" v-model="$v.formResponseStepOne.lastName.$model" class="form__input">
         <label for="" class="form__label">
           UserName on GitHub:
+          <p class="error" v-if="!$v.formResponseStepOne.userName.required">this field is required</p>
         </label>
-        <input type="text" class="form__input">
+        <input type="text" v-model="$v.formResponseStepOne.userName.$model"  class="form__input">
       </section>
     </section>
 
@@ -38,10 +54,27 @@
       <section class="form__content">
         <label for="" class="form__label">
           E-mail:
+          <p class="error" v-if="!$v.formResponseStepTwo.email.required">this field is required</p>
+          <p
+            class="error" v-if="!$v.formResponseStepTwo.email.email">
+              You must be use a valid email account
+          </p>
         </label>
-        <input type="mail" class="form__input">
+        <input type="mail"  class="form__input" v-model="$v.formResponseStepTwo.email.$model">
         <div class="agree__terms">
-          <input type="checkbox" id="agree-check" class="form__input form__input--styled-checkbox">
+          <p
+            class="error"
+            v-if="!$v.formResponseStepTwo.checkbox.required">
+            I need you agree with the terms
+          </p>
+
+
+          <input
+            type="checkbox"
+            id="agree-check"
+            class="form__input form__input--styled-checkbox"
+            v-model="$v.formResponseStepTwo.checkbox.$model"
+            >
           <label for="agree-check" class="form__label form__label--styled-checkbox">
             I agree with the terms =]
           </label>
@@ -86,72 +119,6 @@
                 </a>
                 <p class="repos__stars">3 Stars</p>
               </li>
-              <li class="repos__item">
-                <a href="#" class="repos__link">
-                  Lorem ipsum
-                </a>
-                <p class="repos__stars">3 Stars</p>
-              </li>
-              <li class="repos__item">
-                <a href="#" class="repos__link">
-                  Lorem ipsum
-                </a>
-                <p class="repos__stars">3 Stars</p>
-              </li>
-              <li class="repos__item">
-                <a href="#" class="repos__link">
-                  Lorem ipsum
-                </a>
-                <p class="repos__stars">3 Stars</p>
-              </li>
-              <li class="repos__item">
-                <a href="#" class="repos__link">
-                  Lorem ipsum
-                </a>
-                <p class="repos__stars">3 Stars</p>
-              </li>
-              <li class="repos__item">
-                <a href="#" class="repos__link">
-                  Lorem ipsum
-                </a>
-                <p class="repos__stars">3 Stars</p>
-              </li>
-              <li class="repos__item">
-                <a href="#" class="repos__link">
-                  Lorem ipsum
-                </a>
-                <p class="repos__stars">3 Stars</p>
-              </li>
-              <li class="repos__item">
-                <a href="#" class="repos__link">
-                  Lorem ipsum
-                </a>
-                <p class="repos__stars">3 Stars</p>
-              </li>
-              <li class="repos__item">
-                <a href="#" class="repos__link">
-                  Lorem ipsum
-                </a>
-                <p class="repos__stars">3 Stars</p>
-              </li>
-              <li class="repos__item">
-                <a href="#" class="repos__link">
-                  Lorem ipsum
-                </a>
-                <p class="repos__stars">3 Stars</p>
-              </li>
-              <li class="repos__item">
-                <a href="#" class="repos__link">
-                  Lorem ipsum
-                </a>
-                <p class="repos__stars">3 Stars</p>
-              </li>
-              <li class="repos__item">
-                <a href="#" class="repos__link">
-                  Lorem ipsum
-                </a>
-                <p class="repos__stars">3 Stars</p>
-              </li>
             </ul>
           </section>
       </section>
@@ -166,7 +133,7 @@
       <button
         class="button button--medium"
         @click="nextStage"
-        v-if="step < 4">
+        v-if="(step == 2 && !$v.formResponseStepOne.$invalid) || (step == 3 && !$v.formResponseStepTwo.$invalid)">
           Next
         </button>
     </div>
@@ -176,20 +143,62 @@
 </template>
 
 <script>
+
+import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
+
 export default {
   name: 'FormSteps',
   data() {
     return {
-      step: 1
+      step: 1,
+      formResponseStepOne: {
+        name: '',
+        lastName: '',
+        userName: ''
+      },
+      formResponseStepTwo: {
+        email: '',
+        checkbox: ''
+      },
     }
+  },
+  
+  computed: {
+    
   },
   methods: {
     nextStage () {
-      console.log(this.step)
       this.step++
     },
     prevStage () {
       this.step--
+    }
+  },
+
+  validations: {
+    formResponseStepOne: {
+      name: {
+        required,
+        minLength: minLength(3)
+      },
+      lastName: {
+        required,
+        minLength: minLength(3)
+      },
+      userName: {
+        required
+      }
+    },
+
+    formResponseStepTwo: {
+      email: {
+        required,
+        email
+      },
+      checkbox: {
+        required,
+        sameAs: sameAs( () => true )
+      }
     }
   }
 }
