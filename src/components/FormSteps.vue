@@ -4,169 +4,171 @@
       Make new consulting
     </a>
 
-    <section id="step-one" class="container" v-if="step === 1">
-      <h3 class="step__title">
-        Hey, how are you?!?!
-      </h3>
-      <p class="intro__info">
-        I'am GgUser, i like get info!! So if you give me a litle info about you i response to you with your profile's info in github =]
-      </p>
-      <button class="button" @click="nextStage">
-        Let's start!?
-      </button>
-    </section>
-    <section id="step-two" class="container" v-if="step === 2">
-      <h3 class="step__title">
-        So, whats is your name? user name on git too, ok?
-      </h3>
-      <section class="form__content">
-        <label for="" class="form__label">
-          Name:
-          <p class="form__error" v-if="!$v.formResponseStepOne.name.required">this field is required</p>
-          <p
-            class="form__error"
-            v-if="!$v.formResponseStepOne.name.minLength">
-              Field must have at least {{ $v.formResponseStepOne.name.$params.minLength.min }} characters.
-          </p>
-        </label>
-        <input 
-          type="text"
-          v-model="$v.formResponseStepOne.name.$model"
-          class="form__input">
-        <label for="" class="form__label">
-          Last Name:
-          <p class="form__error" v-if="!$v.formResponseStepOne.lastName.required">this field is required</p>
-          <p
-            class="form__error"
-            v-if="!$v.formResponseStepOne.lastName.minLength">
-              Field must have at least {{ $v.formResponseStepOne.lastName.$params.minLength.min }} characters.
-          </p>
-        </label>
-        <input type="text" v-model="$v.formResponseStepOne.lastName.$model" class="form__input">
-        <label for="" class="form__label">
-          UserName on GitHub:
-          <p class="form__error" v-if="!$v.formResponseStepOne.userName.required">this field is required</p>
-        </label>
-        <input type="text" v-model="$v.formResponseStepOne.userName.$model"  class="form__input">
-      </section>
-      <div class="button__container">
-        <button
-          class="button button--medium"
-          @click="prevStage">
-            Prev
-          </button>
-        <button
-          class="button button--medium"
-          @click="nextStage"
-          v-if="!$v.formResponseStepOne.$invalid">
-            Next
+    <transition name="slide-in-left" mode="out-in">
+      <section id="step-one" class="container" v-if="step === 1" key="step-one">
+        <h3 class="step__title">
+          Hey, how are you?!?!
+        </h3>
+        <p class="intro__info">
+          I'am GgUser, i like get info!! So if you give me a litle info about you i response to you with your profile's info in github =]
+        </p>
+        <button class="button" @click="nextStage">
+          Let's start!?
         </button>
-      </div>
-    </section>
-
-    <section id="step-tree" class="container" v-if="step === 3">
-      <h3 class="step__title">
-        So far, so good... But i need your email and your agree to terms of use
-      </h3>
-      <section class="form__content">
-        <label for="" class="form__label">
-          E-mail:
-          <p class="form__error" v-if="!$v.formResponseStepTwo.email.required">this field is required</p>
-          <p
-            class="form__error" v-if="!$v.formResponseStepTwo.email.email">
-              You must be use a valid email account
-          </p>
-        </label>
-        <input type="mail"  class="form__input" v-model="$v.formResponseStepTwo.email.$model">
-        <div class="agree__terms">
-          <p
-            class="form__error form__error--agree"
-            v-if="$v.formResponseStepTwo.checkbox.$invalid">
-            I need you agree with the terms
-          </p>
-
-          <input
-            type="checkbox"
-            id="agree-check"
-            class="form__input form__input--styled-checkbox"
-            v-model="$v.formResponseStepTwo.checkbox.$model"
-            >
-          <label for="agree-check" class="form__label form__label--styled-checkbox">
-            I agree with the terms =]
+      </section>
+    
+      <section id="step-two" class="container" v-if="step === 2" key="step-two">
+        <h3 class="step__title">
+          So, whats is your name? user name on git too, ok?
+        </h3>
+        <section class="form__content">
+          <label for="" class="form__label">
+            Name:
+            <p class="form__error" v-if="!$v.formResponseStepOne.name.required">this field is required</p>
+            <p
+              class="form__error"
+              v-if="!$v.formResponseStepOne.name.minLength">
+                Field must have at least {{ $v.formResponseStepOne.name.$params.minLength.min }} characters.
+            </p>
           </label>
+          <input 
+            type="text"
+            v-model="$v.formResponseStepOne.name.$model"
+            class="form__input">
+          <label for="" class="form__label">
+            Last Name:
+            <p class="form__error" v-if="!$v.formResponseStepOne.lastName.required">this field is required</p>
+            <p
+              class="form__error"
+              v-if="!$v.formResponseStepOne.lastName.minLength">
+                Field must have at least {{ $v.formResponseStepOne.lastName.$params.minLength.min }} characters.
+            </p>
+          </label>
+          <input type="text" v-model="$v.formResponseStepOne.lastName.$model" class="form__input">
+          <label for="" class="form__label">
+            UserName on GitHub:
+            <p class="form__error" v-if="!$v.formResponseStepOne.userName.required">this field is required</p>
+          </label>
+          <input type="text" v-model="$v.formResponseStepOne.userName.$model"  class="form__input">
+        </section>
+        <div class="button__container">
+          <button
+            class="button button--medium"
+            @click="prevStage">
+              Prev
+            </button>
+          <button
+            class="button button--medium"
+            @click="nextStage"
+            v-if="!$v.formResponseStepOne.$invalid">
+              Next
+          </button>
         </div>
       </section>
-      <div class="button__container">
-        <button
-          class="button button--medium"
-          @click="prevStage">
-            Prev
+    
+
+    
+      <section id="step-three" class="container" v-if="step === 3" key="step-three">
+        <h3 class="step__title">
+          So far, so good... But i need your email and your agree to terms of use
+        </h3>
+        <section class="form__content">
+          <label for="" class="form__label">
+            E-mail:
+            <p class="form__error" v-if="!$v.formResponseStepTwo.email.required">this field is required</p>
+            <p
+              class="form__error" v-if="!$v.formResponseStepTwo.email.email">
+                You must be use a valid email account
+            </p>
+          </label>
+          <input type="mail"  class="form__input" v-model="$v.formResponseStepTwo.email.$model">
+          <div class="agree__terms">
+            <p
+              class="form__error form__error--agree"
+              v-if="$v.formResponseStepTwo.checkbox.$invalid">
+              I need you agree with the terms
+            </p>
+
+            <input
+              type="checkbox"
+              id="agree-check"
+              class="form__input form__input--styled-checkbox"
+              v-model="$v.formResponseStepTwo.checkbox.$model"
+              >
+            <label for="agree-check" class="form__label form__label--styled-checkbox">
+              I agree with the terms =]
+            </label>
+          </div>
+        </section>
+        <div class="button__container">
+          <button
+            class="button button--medium"
+            @click="prevStage">
+              Prev
+            </button>
+
+          <button
+            @click="getUserInfo(formResponseStepOne.userName)"
+            class="button button--medium"
+            v-if="!$v.formResponseStepOne.$invalid && !$v.formResponseStepTwo.$invalid"
+          >
+            View Github Info
           </button>
-
-        <button
-          @click="getUserInfo(formResponseStepOne.userName)"
-          class="button button--medium"
-          v-if="!$v.formResponseStepOne.$invalid && !$v.formResponseStepTwo.$invalid"
-        >
-          View Github Info
-        </button>
-      </div>
-    </section>
-    <section class="container" v-if="step === 4 && !getInfo">
-      <h3 class="step__title">
-        Loading ......
-      </h3>
-    </section>
-    <section id="step-four" class="container" v-if="step === 4 && getInfo">
-      <h3 class="step__title">
-        I Get You!!
-      </h3>
-      <section class="user">
-        <header class="user__header">
-          <div class="user__image__container">
-            <img :src="user.avatar_url" :alt="user.name" class="user__image" target="_blank">
-          </div>
-          <div class="user__info__container">
-            <h4 class="user__name">
-              {{user.name}}
-            </h4>
-            <a :href="user.html_url" target="_blank" class="button button--small">
-              View in GitHub
-            </a>
-            <ul class="user__labels">
-              <li class="user__info">{{user.location}}</li>
-              <li class="user__info">{{user.followers}} Followers</li>
-              <li class="user__info">{{user.following}} Following</li>
-            </ul>
-            <p class="user__bio" v-if="user.bio">
-              {{user.bio}}
-            </p>
-            <p class="user__bio" v-else>
-              How! you do have a bio/description by yourself, think in something, bio help people to know you!!
-            </p>
-          </div>
-
-          
-        </header>
-        <section>
-            <h4 class="step__title step__title--secondary">
-              Your Repos
-            </h4>
-            <ul class="repos__list">
-              <li class="repos__item" v-for="repo in repos" :key="repo.id">
-                <a :href="repo.html_url" target="_blank" class="repos__link">
-                  {{repo.name}}
-                </a>
-                <p class="repos__stars">
-                  {{repo.stargazers_count}}
-                    <span v-if="repo.stargazers_count <= 1">Star</span>
-                    <span v-if="repo.stargazers_count > 1">Stars</span>
-                  </p>
-              </li>
-            </ul>
-          </section>
+        </div>
       </section>
-    </section>
+    
+    
+      <section id="step-four" class="container" v-if="step === 4 && getInfo" key="step-four">
+        <h3 class="step__title">
+          I Get You!!
+        </h3>
+        <section class="user">
+          <header class="user__header">
+            <div class="user__image__container">
+              <img :src="user.avatar_url" :alt="user.name" class="user__image" target="_blank">
+            </div>
+            <div class="user__info__container">
+              <h4 class="user__name">
+                {{user.name}}
+              </h4>
+              <a :href="user.html_url" target="_blank" class="button button--small">
+                View in GitHub
+              </a>
+              <ul class="user__labels">
+                <li class="user__info">{{user.location}}</li>
+                <li class="user__info">{{user.followers}} Followers</li>
+                <li class="user__info">{{user.following}} Following</li>
+              </ul>
+              <p class="user__bio" v-if="user.bio">
+                {{user.bio}}
+              </p>
+              <p class="user__bio" v-else>
+                How! you do have a bio/description by yourself, think in something, bio help people to know you!!
+              </p>
+            </div>
+
+            
+          </header>
+          <section>
+              <h4 class="step__title step__title--secondary">
+                Your Repos
+              </h4>
+              <ul class="repos__list">
+                <li class="repos__item" v-for="repo in repos" :key="repo.id">
+                  <a :href="repo.html_url" target="_blank" class="repos__link">
+                    {{repo.name}}
+                  </a>
+                  <p class="repos__stars">
+                    {{repo.stargazers_count}}
+                      <span v-if="repo.stargazers_count <= 1">Star</span>
+                      <span v-if="repo.stargazers_count > 1">Stars</span>
+                    </p>
+                </li>
+              </ul>
+            </section>
+        </section>
+      </section>
+    </transition>
   </section>
 </template>
 
