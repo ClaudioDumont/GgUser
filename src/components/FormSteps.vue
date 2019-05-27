@@ -18,9 +18,9 @@
       <section class="form__content">
         <label for="" class="form__label">
           Name:
-          <p class="error" v-if="!$v.formResponseStepOne.name.required">this field is required</p>
+          <p class="form__error" v-if="!$v.formResponseStepOne.name.required">this field is required</p>
           <p
-            class="error"
+            class="form__error"
             v-if="!$v.formResponseStepOne.name.minLength">
               Field must have at least {{ $v.formResponseStepOne.name.$params.minLength.min }} characters.
           </p>
@@ -31,9 +31,9 @@
           class="form__input">
         <label for="" class="form__label">
           Last Name:
-          <p class="error" v-if="!$v.formResponseStepOne.lastName.required">this field is required</p>
+          <p class="form__error" v-if="!$v.formResponseStepOne.lastName.required">this field is required</p>
           <p
-            class="error"
+            class="form__error"
             v-if="!$v.formResponseStepOne.lastName.minLength">
               Field must have at least {{ $v.formResponseStepOne.lastName.$params.minLength.min }} characters.
           </p>
@@ -41,7 +41,7 @@
         <input type="text" v-model="$v.formResponseStepOne.lastName.$model" class="form__input">
         <label for="" class="form__label">
           UserName on GitHub:
-          <p class="error" v-if="!$v.formResponseStepOne.userName.required">this field is required</p>
+          <p class="form__error" v-if="!$v.formResponseStepOne.userName.required">this field is required</p>
         </label>
         <input type="text" v-model="$v.formResponseStepOne.userName.$model"  class="form__input">
       </section>
@@ -54,20 +54,19 @@
       <section class="form__content">
         <label for="" class="form__label">
           E-mail:
-          <p class="error" v-if="!$v.formResponseStepTwo.email.required">this field is required</p>
+          <p class="form__error" v-if="!$v.formResponseStepTwo.email.required">this field is required</p>
           <p
-            class="error" v-if="!$v.formResponseStepTwo.email.email">
+            class="form__error" v-if="!$v.formResponseStepTwo.email.email">
               You must be use a valid email account
           </p>
         </label>
         <input type="mail"  class="form__input" v-model="$v.formResponseStepTwo.email.$model">
         <div class="agree__terms">
           <p
-            class="error"
-            v-if="!$v.formResponseStepTwo.checkbox.required">
+            class="form__error form__error--agree"
+            v-if="$v.formResponseStepTwo.checkbox.$invalid">
             I need you agree with the terms
           </p>
-
 
           <input
             type="checkbox"
@@ -246,6 +245,7 @@ export default {
     width: 100%;
     margin: 0 0 .3em 0;
     color: #535970;
+    position: relative;
 
     &--styled-checkbox {
       position: relative;
@@ -268,6 +268,23 @@ export default {
           background: #ccc;
         }
       }
+    }
+  }
+
+  &__error {
+    color: #ff0000;
+    font-size: 11px;
+    letter-spacing: 1px;
+    font-weight: normal;
+    text-transform: uppercase;
+    position: absolute;
+    top: 20px;
+    right: 5px;
+
+    &--agree {
+      right: auto;
+      top: 15px;
+      left: 35px;
     }
   }
 
@@ -309,6 +326,9 @@ export default {
   }
 }
 
+.agree__terms {
+  position: relative;
+}
 .user {
   &__header {
     display: flex;
