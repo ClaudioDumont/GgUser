@@ -146,9 +146,6 @@
               <p class="user__bio" v-if="user.bio">
                 {{user.bio}}
               </p>
-              <p class="user__bio" v-else>
-                How! you do have a bio/description by yourself, think in something, bio help people to know you!!
-              </p>
             </div>
 
             
@@ -176,16 +173,25 @@
         </section>
       </section>
 
-      <section class="container" v-if="showError && step === 4" key="show-error">
+      <section class="container error" v-if="showError && step === 4" key="show-error">
         <h3 class="step__title">
           Something went Wrong
         </h3>
-        <img src="https://cdn-media-1.freecodecamp.org/images/bamlgwPuXXB-fnXeFEZmDDKpFyORz8ZacX23" height="150" alt="">
-        <p>
+        <img class="error__image" src="../assets/git-cat.png" >
+
+        <p class="error__message">
           The user you requested could not be found. Is there any chance you were wrong when you pass the user to me?
+          Try again, give me another user in GitHub.
         </p>
 
-        <a @click="step = 2" class="button button--error">
+        <label for="" class="form__label">
+          UserName:
+          <p class="form__error" v-if="!$v.formResponseStepOne.userName.required">this field is required</p>
+        </label>
+        
+        <input type="text" v-model="$v.formResponseStepOne.userName.$model"  class="form__input">
+
+        <a @click="getUserInfo(formResponseStepOne.userName)" class="button button--error">
           Make new consulting
         </a>
       </section>
@@ -313,6 +319,37 @@ export default {
   }
 }
 
+.error {
+  &__image {
+    max-height: 190px;
+    margin: 0 auto;
+    display: block;
+    
+    @include breakpoint(phablet) {
+      max-height: 120px;
+    }
+
+    @include breakpoint(mobileonly) {
+      max-height: 100px;
+    }
+  }
+
+  &__message {
+    font-size: 22px;
+    line-height: 1.8em;
+    text-align: center;
+
+    @include breakpoint(phablet) {
+      font-size: 18px;
+    }
+
+    @include breakpoint(mobileonly) {
+      font-size: 16px;
+      line-height: 1.6em;
+    }
+  }
+}
+
 .step__title {
   font-family: $font-title;
   font-size: 35px;
@@ -325,9 +362,14 @@ export default {
     font-size: 26px;
   }
 
+  @include breakpoint(phablet) {
+    font-size: 26px;
+    margin: .5em 0;
+  }
+
   @include breakpoint(mobileonly) {
     margin: .5em 0 1.5em 0;
-    font-size: 26px;
+    font-size: 24px;
   }
 }
 

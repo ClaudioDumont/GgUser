@@ -51,7 +51,7 @@ export default {
 
 .logo {
     padding: 15px 15px 15px 90px;
-    background: url(https://www.pinclipart.com/picdir/big/52-529941_more-graphql-users-github-svg-clipart.png) no-repeat left 5px top 7px;
+    background: url('../assets/git-cat.png') no-repeat left 5px top 7px;
     background-size: 70px;
     font-family: $font-title;
     font-size: 50px;
