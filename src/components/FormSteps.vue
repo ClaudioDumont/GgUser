@@ -105,7 +105,7 @@
             </button>
 
           <button
-            @click="getUserInfo(formResponseStepOne.userName)"
+            @click="getInfo(formResponseStepOne.userName)"
             class="button button--medium"
             v-if="!$v.formResponseStepOne.$invalid && !$v.formResponseStepTwo.$invalid"
           >
@@ -115,7 +115,7 @@
       </section>
     
     
-      <section id="step-four" class="container" v-if="step === 4 && getInfo && !showError" key="step-four">
+      <section id="step-four" class="container" v-if="step === 4 && haveInfo && !showError" key="step-four">
         <a href="/" class="button button--small button--back">
           Make new consulting
         </a>
@@ -188,7 +188,7 @@
         
         <input type="text" v-model="$v.formResponseStepOne.userName.$model"  class="form__input">
 
-        <a @click="getUserInfo(formResponseStepOne.userName)" class="button button--error">
+        <a @click="getInfo(formResponseStepOne.userName)" class="button button--error">
           Make new consulting
         </a>
       </section>
@@ -206,7 +206,7 @@ export default {
   data() {
     return {
       step: 1,
-      getInfo: false,
+      haveInfo: false,
       showError: false,
       user: [],
       repos: [],
@@ -221,52 +221,40 @@ export default {
       },
     }
   },
-  
-  computed: {
-    
-  },
   methods: {
     nextStage () {
       if(this.step < 4) {
         this.step++
         this.$emit('currentStage', this.step)
       }
-      
     },
     prevStage () {
       this.step--
       this.$emit('currentStage', this.step)
     },
 
-    getUserInfo (userName) {
-      
-      axios.get(`https://api.github.com/users/${userName}/repos`)
-      .then((response) => {
-        this.repos = response.data
-        this.getInfo = true;
-        this.showError = false;
-      })
+    getUserInfo(userName) {
+      return axios.get(`https://api.github.com/users/${userName}`)
+    },
+
+    getReposInfo(userName) {
+      return axios.get(`https://api.github.com/users/${userName}/repos`)
+    },
+
+    getInfo (userName) {
+      axios.all([this.getUserInfo(userName), this.getReposInfo(userName)])
+      .then(axios.spread((userResponse, reposResponse) => {
+        this.repos = reposResponse.data
+        this.user = userResponse.data
+        this.haveInfo = true
+        this.showError = false
+      }))
       .catch((error) => {
-        console.log(error);
-        this.showError = true;
+        this.showError = true
       })
       .then(() => {
-        this.nextStage();
-      });  
-
-
-      axios.get(`https://api.github.com/users/${userName}`)
-      .then((response) => {
-        this.user = response.data
-        this.getInfo = true;
-        this.showError = false;
-      })
-      .catch((error) => {
-        console.log(error);
-        this.showError = true;
-      })
-      .then(() => {
-        this.nextStage();
+        this.nextStage()
+        this.persist()
       });
     }
   },
