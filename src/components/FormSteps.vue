@@ -254,7 +254,6 @@ export default {
       })
       .then(() => {
         this.nextStage()
-        this.persist()
       });
     }
   },
