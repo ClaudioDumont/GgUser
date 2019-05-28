@@ -3,27 +3,26 @@
     <h1 class="logo">
       GgUser
     </h1>
-    {{currentStage}}
       <ul class="steps">
-        <li class="steps__item steps__item--active">
+        <li class="steps__item " :class="currentStage == 1 ? 'steps__item--active' : ''">
           <p class="steps__item__text">
             Hey YOU!!
           </p>
         </li>
 
-        <li class="steps__item">
+        <li class="steps__item" :class="currentStage == 2 ? 'steps__item--active' : ''">
           <p class="steps__item__text">
             A lot of names :)
           </p>
         </li>
 
-        <li class="steps__item">
+        <li class="steps__item" :class="currentStage == 3 ? 'steps__item--active' : ''">
           <p class="steps__item__text">
             Give me your email
           </p>
         </li>
 
-        <li class="steps__item">
+        <li class="steps__item" :class="currentStage == 4 ? 'steps__item--active' : ''">
           <p class="steps__item__text">
             This is your Profile
           </p>
@@ -37,11 +36,6 @@ export default {
   name: 'SidebarSteps',
   props: {
     currentStage: Number
-  },
-  computed: {
-    stageOne() {
-      return this.currentStage === '1' ? 'steps__item--active' : 1;
-    }
   }
 }
 </script>
@@ -72,11 +66,14 @@ export default {
 
 .steps {
   margin: 3em 0;
-  padding: 0;
   list-style: none;
+  padding: 0 0 0 2em;
+  width: 100%;
 
   @include breakpoint(mobileonly) {
     margin: 0;
+    padding: 0;
+    width: auto;
     display: flex;
   }
 
@@ -89,6 +86,7 @@ export default {
     font-size: 18px;
     padding: 0 0 0 35px;
     text-shadow: 2px 2px 15px rgba(0,0,0,.5);
+    @include transition();
 
     @include breakpoint(mobileonly) {
         margin: 1em .5em;

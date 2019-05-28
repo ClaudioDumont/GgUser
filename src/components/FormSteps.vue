@@ -3,9 +3,6 @@
     
 
     <transition name="slide-fade" mode="out-in">
-      
-        
-      
       <section id="step-one" class="container" v-if="step === 1" key="step-one">
         <h3 class="step__title">
           Hey, how are you?!?!
@@ -119,7 +116,7 @@
     
     
       <section id="step-four" class="container" v-if="step === 4 && getInfo && !showError" key="step-four">
-        <a @click="step = 2" class="button button--small button--back">
+        <a href="/" class="button button--small button--back">
           Make new consulting
         </a>
         <h3 class="step__title">

@@ -1,7 +1,7 @@
 <template>
   <main id="app" class="main">
     <section class="main__content">
-      <SidebarSteps />
+      <SidebarSteps :current-stage="currentStage"/>
       <FormSteps 
         @currentStage="currentStage = $event"
       />
