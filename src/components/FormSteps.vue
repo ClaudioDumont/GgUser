@@ -1,10 +1,11 @@
 <template>
   <section class="content content--right">
-    <a @click="step = 2" class="button button--small button--back" v-if="(step === 4 && getInfo) || showError">
-      Make new consulting
-    </a>
+    
 
-    <transition name="slide-in-left" mode="out-in">
+    <transition name="slide-fade" mode="out-in">
+      
+        
+      
       <section id="step-one" class="container" v-if="step === 1" key="step-one">
         <h3 class="step__title">
           Hey, how are you?!?!
@@ -117,9 +118,12 @@
       </section>
     
     
-      <section id="step-four" class="container" v-if="step === 4 && getInfo" key="step-four">
+      <section id="step-four" class="container" v-if="step === 4 && getInfo && !showError" key="step-four">
+        <a @click="step = 2" class="button button--small button--back">
+          Make new consulting
+        </a>
         <h3 class="step__title">
-          I Get You!!
+          I Got You!!
         </h3>
         <section class="user">
           <header class="user__header">
@@ -172,15 +176,20 @@
         </section>
       </section>
 
-      <section class="container" v-if="showError" key="show-error">
+      <section class="container" v-if="showError && step === 4" key="show-error">
         <h3 class="step__title">
-          Uh oh.
+          Something went Wrong
         </h3>
         <img src="https://cdn-media-1.freecodecamp.org/images/bamlgwPuXXB-fnXeFEZmDDKpFyORz8ZacX23" height="150" alt="">
         <p>
-          The user you requested could not be found. Is there any chance you were wrong when you pass the user to me
+          The user you requested could not be found. Is there any chance you were wrong when you pass the user to me?
         </p>
+
+        <a @click="step = 2" class="button button--error">
+          Make new consulting
+        </a>
       </section>
+      
     </transition>
   </section>
 </template>
@@ -217,11 +226,13 @@ export default {
     nextStage () {
       if(this.step < 4) {
         this.step++
+        this.$emit('currentStage', this.step)
       }
       
     },
     prevStage () {
       this.step--
+      this.$emit('currentStage', this.step)
     },
 
     getUserInfo (userName) {
@@ -230,6 +241,7 @@ export default {
       .then((response) => {
         this.repos = response.data
         this.getInfo = true;
+        this.showError = false;
       })
       .catch((error) => {
         console.log(error);
@@ -244,6 +256,7 @@ export default {
       .then((response) => {
         this.user = response.data
         this.getInfo = true;
+        this.showError = false;
       })
       .catch((error) => {
         console.log(error);

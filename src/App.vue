@@ -2,7 +2,9 @@
   <main id="app" class="main">
     <section class="main__content">
       <SidebarSteps />
-      <FormSteps />
+      <FormSteps 
+        @currentStage="currentStage = $event"
+      />
     </section>
   </main>
 </template>
@@ -16,6 +18,11 @@ export default {
   components: {
     SidebarSteps,
     FormSteps
+  },
+  data() {
+    return {
+      currentStage: 1
+    }
   }
 }
 </script>

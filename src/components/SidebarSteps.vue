@@ -3,6 +3,7 @@
     <h1 class="logo">
       GgUser
     </h1>
+    {{currentStage}}
       <ul class="steps">
         <li class="steps__item steps__item--active">
           <p class="steps__item__text">
@@ -35,7 +36,12 @@
 export default {
   name: 'SidebarSteps',
   props: {
-    currentStage: String
+    currentStage: Number
+  },
+  computed: {
+    stageOne() {
+      return this.currentStage === '1' ? 'steps__item--active' : 1;
+    }
   }
 }
 </script>
