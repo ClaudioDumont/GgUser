@@ -1,7 +1,6 @@
 <template>
   <section class="content content--right">
-    
-    <a 
+    <a
       @click="goBack"
       class="button button--small button--back"
       v-if="currentStep === 4 && haveInfo && !showError">
@@ -19,7 +18,6 @@
           Let's start!?
         </button>
       </section>
-    
       <section id="step-two" class="container" v-if="currentStep === 2" key="step-two">
         <h3 class="step__title">
           So, whats is your name? user name on GitHub too, ok?
@@ -34,7 +32,7 @@
                 Field must have at least {{ $v.formResponseStepOne.name.$params.minLength.min }} characters.
             </p>
           </label>
-          <input 
+          <input
             type="text"
             v-model="$v.formResponseStepOne.name.$model"
             class="form__input">
@@ -68,8 +66,6 @@
           </button>
         </div>
       </section>
-    
-
       <section id="step-three" class="container" v-if="currentStep === 3" key="step-three">
         <h3 class="step__title">
           So far, so good... But i need your email and your agreement to terms of use
@@ -90,7 +86,6 @@
               v-if="$v.formResponseStepTwo.checkbox.$invalid">
               I need you agree with the terms
             </p>
-
             <input
               type="checkbox"
               id="agree-check"
@@ -118,8 +113,6 @@
           </button>
         </div>
       </section>
-    
-    
       <section id="step-four" class="container" v-if="currentStep === 4 && haveInfo && !showError" key="step-four">
         <h3 class="step__title">
           I Got You!!
@@ -146,11 +139,10 @@
                 {{user.bio}}
               </p>
             </div>
-
           </header>
           <section>
               <h4 class="step__title step__title--secondary">
-                Your Repos 
+                Your Repos
                 <span v-if="repos.length > 0">
                   ({{repos.length}})
                 </span>
@@ -170,18 +162,15 @@
             </section>
         </section>
       </section>
-      
-      <on-error v-if="showError && currentStep === 4" key="show-error" />      
+      <on-error v-if="showError && currentStep === 4" key="show-error" />
     </transition>
   </section>
 </template>
 
 <script>
 import axios from 'axios'
-import store from '@/store'
-import { mapState } from 'vuex'
-import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
-import OnError from '@/components/OnError.vue' 
+import { required, email, minLength, sameAs } from 'vuelidate/lib/validators'
+import OnError from '@/components/OnError.vue'
 
 export default {
   name: 'FormSteps',
@@ -189,7 +178,7 @@ export default {
     OnError
   },
 
-  data() {
+  data () {
     return {
       step: this.$store.state.currentStep,
       haveInfo: false,
@@ -204,7 +193,7 @@ export default {
       formResponseStepTwo: {
         email: '',
         checkbox: ''
-      },
+      }
     }
   },
 
@@ -220,15 +209,15 @@ export default {
         name: this.formResponseStepOne.name,
         lastName: this.formResponseStepOne.lastName,
         userName: this.formResponseStepOne.userName,
-        email: this.formResponseStepTwo.email 
+        email: this.formResponseStepTwo.email
       }
       this.$store.commit('CHANGE_USER_APP_INFO', payload)
     },
 
     nextStage () {
-      this.$store.commit('INCREMENT_STEP', this.step)
+      this.$store.commit('INCREMENT_STEP')
     },
-    
+
     prevStage () {
       this.$store.commit('DECREMENT_STEP')
     },
@@ -237,29 +226,30 @@ export default {
       this.$store.commit('GO_BACK')
     },
 
-    getUserInfo(userName) {
+    getUserInfo (userName) {
       return axios.get(`https://api.github.com/users/${userName}`)
     },
 
-    getReposInfo(userName) {
+    getReposInfo (userName) {
       return axios.get(`https://api.github.com/users/${userName}/repos`)
     },
 
     getInfo (userName) {
-      this.setUserAppInfo();
+      this.setUserAppInfo()
       axios.all([this.getUserInfo(userName), this.getReposInfo(userName)])
-      .then(axios.spread((userResponse, reposResponse) => {
-        this.repos = reposResponse.data
-        this.user = userResponse.data
-        this.haveInfo = true
-        this.showError = false
-      }))
-      .catch((error) => {
-        this.showError = true
-      })
-      .then(() => {
-        this.nextStage()
-      });
+        .then(axios.spread((userResponse, reposResponse) => {
+          this.repos = reposResponse.data
+          this.user = userResponse.data
+          this.haveInfo = true
+          this.showError = false
+        }))
+        .catch((error) => {
+          console.log(error)
+          this.showError = true
+        })
+        .then(() => {
+          this.nextStage()
+        })
     }
   },
 
@@ -285,7 +275,7 @@ export default {
       },
       checkbox: {
         required,
-        sameAs: sameAs( () => true )
+        sameAs: sameAs(() => true)
       }
     }
   }

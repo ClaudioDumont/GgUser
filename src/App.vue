@@ -5,7 +5,6 @@
       <form-steps />
     </section>
   </main>
-  
 </template>
 
 <script>

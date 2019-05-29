@@ -2,7 +2,7 @@
   <aside class="content content--left">
     <h1 class="logo">
       GgUser
-    </h1>      
+    </h1>
       <ul class="steps">
         <li class="steps__item " :class="currentStep == 1 ? 'steps__item--active' : ''">
           <p class="steps__item__text">

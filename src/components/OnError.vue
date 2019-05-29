@@ -17,14 +17,13 @@
 </template>
 <script>
 
-
 export default {
   name: 'OnError',
   methods: {
     getNewUser () {
       this.$store.commit('GO_BACK')
     }
-  },
+  }
 }
 </script>
 
@@ -35,7 +34,7 @@ export default {
     max-height: 190px;
     margin: 0 auto;
     display: block;
-    
+
     @include breakpoint(phablet) {
       max-height: 120px;
     }
