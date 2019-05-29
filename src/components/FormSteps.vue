@@ -1,23 +1,28 @@
 <template>
   <section class="content content--right">
     
-
+    <a 
+      @click="goBack"
+      class="button button--small button--back"
+      v-if="currentStep === 4 && haveInfo && !showError">
+      Make a new query
+    </a>
     <transition name="slide-fade" mode="out-in">
-      <section id="step-one" class="container" v-if="step === 1" key="step-one">
+      <section id="step-one" class="container" v-if="currentStep === 1" key="step-one">
         <h3 class="step__title">
           Hey, how are you?!?!
         </h3>
         <p class="intro__info">
-          I'am GgUser, i like get info!! So if you give me a litle info about you i response to you with your profile's info in github =]
+          I'am GgUser, i like get info!! So if you give me a some info about you i return to you with your profile's info in github =]
         </p>
         <button class="button" @click="nextStage">
           Let's start!?
         </button>
       </section>
     
-      <section id="step-two" class="container" v-if="step === 2" key="step-two">
+      <section id="step-two" class="container" v-if="currentStep === 2" key="step-two">
         <h3 class="step__title">
-          So, whats is your name? user name on git too, ok?
+          So, whats is your name? user name on GitHub too, ok?
         </h3>
         <section class="form__content">
           <label for="" class="form__label">
@@ -65,9 +70,9 @@
       </section>
     
 
-      <section id="step-three" class="container" v-if="step === 3" key="step-three">
+      <section id="step-three" class="container" v-if="currentStep === 3" key="step-three">
         <h3 class="step__title">
-          So far, so good... But i need your email and your agree to terms of use
+          So far, so good... But i need your email and your agreement to terms of use
         </h3>
         <section class="form__content">
           <label for="" class="form__label">
@@ -115,10 +120,7 @@
       </section>
     
     
-      <section id="step-four" class="container" v-if="step === 4 && haveInfo && !showError" key="step-four">
-        <a href="/" class="button button--small button--back">
-          Make new consulting
-        </a>
+      <section id="step-four" class="container" v-if="currentStep === 4 && haveInfo && !showError" key="step-four">
         <h3 class="step__title">
           I Got You!!
         </h3>
@@ -145,7 +147,6 @@
               </p>
             </div>
 
-            
           </header>
           <section>
               <h4 class="step__title step__title--secondary">
@@ -169,43 +170,28 @@
             </section>
         </section>
       </section>
-
-      <section class="container error" v-if="showError && step === 4" key="show-error">
-        <h3 class="step__title">
-          Something went Wrong
-        </h3>
-        <img class="error__image" src="../assets/git-cat.png" >
-
-        <p class="error__message">
-          The user you requested could not be found. Is there any chance you were wrong when you pass the user to me?
-          Try again, give me another user in GitHub.
-        </p>
-
-        <label for="" class="form__label">
-          UserName:
-          <p class="form__error" v-if="!$v.formResponseStepOne.userName.required">this field is required</p>
-        </label>
-        
-        <input type="text" v-model="$v.formResponseStepOne.userName.$model"  class="form__input">
-
-        <a @click="getInfo(formResponseStepOne.userName)" class="button button--error">
-          Make new consulting
-        </a>
-      </section>
       
+      <on-error v-if="showError && currentStep === 4" key="show-error" />      
     </transition>
   </section>
 </template>
 
 <script>
 import axios from 'axios'
+import store from '@/store'
+import { mapState } from 'vuex'
 import { required, email, minLength, sameAs } from "vuelidate/lib/validators";
+import OnError from '@/components/OnError.vue' 
 
 export default {
   name: 'FormSteps',
+  components: {
+    OnError
+  },
+
   data() {
     return {
-      step: 1,
+      step: this.$store.state.currentStep,
       haveInfo: false,
       showError: false,
       user: [],
@@ -221,16 +207,34 @@ export default {
       },
     }
   },
+
+  computed: {
+    currentStep () {
+      return this.$store.state.currentStep
+    }
+  },
+
   methods: {
-    nextStage () {
-      if(this.step < 4) {
-        this.step++
-        this.$emit('currentStage', this.step)
+    setUserAppInfo () {
+      const payload = {
+        name: this.formResponseStepOne.name,
+        lastName: this.formResponseStepOne.lastName,
+        userName: this.formResponseStepOne.userName,
+        email: this.formResponseStepTwo.email 
       }
+      this.$store.commit('CHANGE_USER_APP_INFO', payload)
     },
+
+    nextStage () {
+      this.$store.commit('INCREMENT_STEP', this.step)
+    },
+    
     prevStage () {
-      this.step--
-      this.$emit('currentStage', this.step)
+      this.$store.commit('DECREMENT_STEP')
+    },
+
+    goBack () {
+      this.$store.commit('GO_BACK')
     },
 
     getUserInfo(userName) {
@@ -242,6 +246,7 @@ export default {
     },
 
     getInfo (userName) {
+      this.setUserAppInfo();
       axios.all([this.getUserInfo(userName), this.getReposInfo(userName)])
       .then(axios.spread((userResponse, reposResponse) => {
         this.repos = reposResponse.data
@@ -286,8 +291,6 @@ export default {
   }
 }
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 @import "~styles/base";
 
@@ -300,60 +303,6 @@ export default {
   @include breakpoint(mobileonly) {
     margin: 0;
     line-height: 1.5em;
-  }
-}
-
-.error {
-  &__image {
-    max-height: 190px;
-    margin: 0 auto;
-    display: block;
-    
-    @include breakpoint(phablet) {
-      max-height: 120px;
-    }
-
-    @include breakpoint(mobileonly) {
-      max-height: 100px;
-    }
-  }
-
-  &__message {
-    font-size: 22px;
-    line-height: 1.8em;
-    text-align: center;
-
-    @include breakpoint(phablet) {
-      font-size: 18px;
-    }
-
-    @include breakpoint(mobileonly) {
-      font-size: 16px;
-      line-height: 1.6em;
-    }
-  }
-}
-
-.step__title {
-  font-family: $font-title;
-  font-size: 35px;
-  letter-spacing: 1px;
-  text-align: center;
-
-  &--secondary {
-    margin: .5em 0;
-    text-align: left;
-    font-size: 26px;
-  }
-
-  @include breakpoint(phablet) {
-    font-size: 26px;
-    margin: .5em 0;
-  }
-
-  @include breakpoint(mobileonly) {
-    margin: .5em 0 1.5em 0;
-    font-size: 24px;
   }
 }
 
@@ -449,6 +398,7 @@ export default {
 .agree__terms {
   position: relative;
 }
+
 .user {
   &__header {
     display: flex;

@@ -110,6 +110,29 @@ body {
   }
 }
 
+.step__title {
+  font-family: $font-title;
+  font-size: 35px;
+  letter-spacing: 1px;
+  text-align: center;
+
+  &--secondary {
+    margin: .5em 0;
+    text-align: left;
+    font-size: 26px;
+  }
+
+  @include breakpoint(phablet) {
+    font-size: 26px;
+    margin: .5em 0;
+  }
+
+  @include breakpoint(mobileonly) {
+    margin: .5em 0 1.5em 0;
+    font-size: 24px;
+  }
+}
+
 .slide-fade-enter-active {
   @include transition()
 }
