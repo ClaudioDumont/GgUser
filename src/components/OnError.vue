@@ -6,7 +6,7 @@
     <img class="error__image" src="../assets/git-cat.png" >
 
     <p class="error__message">
-      The user you requested could not be found. Is there any chance you were wrong when you pass the user to me?
+      The user you requested could not be found. Is there any chance you were wrong when you sent the user name to me?
       Try again, give me another user in GitHub.
     </p>
 

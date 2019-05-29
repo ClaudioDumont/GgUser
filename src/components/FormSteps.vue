@@ -13,7 +13,7 @@
           Hey, how are you?!?!
         </h3>
         <p class="intro__info">
-          I'am GgUser, i like get info!! So if you give me a litle info about you i response to you with your profile's info in github =]
+          I'am GgUser, i like get info!! So if you give me a some info about you i return to you with your profile's info in github =]
         </p>
         <button class="button" @click="nextStage">
           Let's start!?
@@ -22,7 +22,7 @@
     
       <section id="step-two" class="container" v-if="currentStep === 2" key="step-two">
         <h3 class="step__title">
-          So, whats is your name? user name on git too, ok?
+          So, whats is your name? user name on GitHub too, ok?
         </h3>
         <section class="form__content">
           <label for="" class="form__label">
@@ -72,7 +72,7 @@
 
       <section id="step-three" class="container" v-if="currentStep === 3" key="step-three">
         <h3 class="step__title">
-          So far, so good... But i need your email and your agree to terms of use
+          So far, so good... But i need your email and your agreement to terms of use
         </h3>
         <section class="form__content">
           <label for="" class="form__label">
@@ -214,10 +214,7 @@ export default {
     }
   },
 
-  
-
   methods: {
-
     setUserAppInfo () {
       const payload = {
         name: this.formResponseStepOne.name,
@@ -250,7 +247,6 @@ export default {
 
     getInfo (userName) {
       this.setUserAppInfo();
-
       axios.all([this.getUserInfo(userName), this.getReposInfo(userName)])
       .then(axios.spread((userResponse, reposResponse) => {
         this.repos = reposResponse.data
