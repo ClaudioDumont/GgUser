@@ -352,6 +352,7 @@ export default {
     border: none;
     padding: 1em;
     width: 100%;
+    line-height: 100%;
     margin: 0 0 2em 0;
     color: #333;
 
