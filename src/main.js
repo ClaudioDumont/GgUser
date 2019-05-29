@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import Vuelidate from 'vuelidate'
 import App from './App'
+import store from './store'
 import './styles/_normalize.scss'
 
 Vue.use(Vuelidate)
@@ -10,6 +11,7 @@ Vue.config.productionTip = false
 
 /* eslint-disable no-new */
 new Vue({
+  store,
   el: '#app',
   components: { App },
   template: '<App/>'

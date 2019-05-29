@@ -2,27 +2,27 @@
   <aside class="content content--left">
     <h1 class="logo">
       GgUser
-    </h1>
+    </h1>      
       <ul class="steps">
-        <li class="steps__item " :class="currentStage == 1 ? 'steps__item--active' : ''">
+        <li class="steps__item " :class="currentStep == 1 ? 'steps__item--active' : ''">
           <p class="steps__item__text">
             Hey YOU!!
           </p>
         </li>
 
-        <li class="steps__item" :class="currentStage == 2 ? 'steps__item--active' : ''">
+        <li class="steps__item" :class="currentStep == 2 ? 'steps__item--active' : ''">
           <p class="steps__item__text">
             A lot of names :)
           </p>
         </li>
 
-        <li class="steps__item" :class="currentStage == 3 ? 'steps__item--active' : ''">
+        <li class="steps__item" :class="currentStep == 3 ? 'steps__item--active' : ''">
           <p class="steps__item__text">
             Give me your email
           </p>
         </li>
 
-        <li class="steps__item" :class="currentStage == 4 ? 'steps__item--active' : ''">
+        <li class="steps__item" :class="currentStep == 4 ? 'steps__item--active' : ''">
           <p class="steps__item__text">
             This is your Profile
           </p>
@@ -34,13 +34,15 @@
 <script>
 export default {
   name: 'SidebarSteps',
-  props: {
-    currentStage: Number
+  computed: {
+    currentStep () {
+      return this.$store.state.currentStep
+    }
   }
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import "~styles/base";
 
 .logo {

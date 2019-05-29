@@ -1,28 +1,22 @@
 <template>
   <main id="app" class="main">
     <section class="main__content">
-      <SidebarSteps :current-stage="currentStage"/>
-      <FormSteps 
-        @currentStage="currentStage = $event"
-      />
+      <sidebar-steps />
+      <form-steps />
     </section>
   </main>
+  
 </template>
 
 <script>
-import SidebarSteps from './components/SidebarSteps.vue'
-import FormSteps from './components/FormSteps.vue'
+import SidebarSteps from '@/components/SidebarSteps.vue'
+import FormSteps from '@/components/FormSteps.vue'
 
 export default {
   name: 'app',
   components: {
     SidebarSteps,
     FormSteps
-  },
-  data() {
-    return {
-      currentStage: 1
-    }
   }
 }
 </script>
