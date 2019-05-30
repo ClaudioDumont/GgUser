@@ -46,23 +46,17 @@ export default {
 @import "~styles/base";
 
 .logo {
-    padding: 15px 15px 15px 90px;
-    background: url('../assets/git-cat.png') no-repeat left 5px top 7px;
-    background-size: 70px;
-    font-family: $font-title;
-    font-size: 50px;
-    letter-spacing: 3px;
+    background: url('../assets/logo-gguser.png') no-repeat center;
+    background-size: contain;
+    height: 115px;
+    width: 100%;
+    text-indent: -999em;
+    overflow: hidden;
     margin: 0;
-    color: #000;
-
-    @include breakpoint(phablet) {
-        font-size: 40px;
-        background-size: 57px;
-        padding-left: 70px;
-    }
 
     @include breakpoint(mobileonly) {
-        font-size: 46px;
+      height: 65px;
+      margin: .2em 0;
     }
 }
 
@@ -91,7 +85,10 @@ export default {
     @include transition();
 
     @include breakpoint(mobileonly) {
-        margin: 1em .5em;
+        margin: .5em;
+        padding: 0;
+        width: 20px;
+        height: 20px;
     }
 
     &:before {
@@ -112,6 +109,10 @@ export default {
       padding-left: 35px;
       text-shadow: 2px 2px 15px rgba(0,0,0,.9);
 
+      @include breakpoint(mobileonly) {
+        padding: 0;
+      }
+
       &:before {
         border-color: #a7a8b1;
         width: 20px;
@@ -121,16 +122,16 @@ export default {
         box-shadow: 0 1px 5px rgba(0,0,0,.5);
 
         @include breakpoint(mobileonly) {
-          top: -12px;
+          top: -8px;
         }
       }
     }
-  }
-}
 
-@include breakpoint(mobileonly) {
-  .steps__item__text {
-    display: none;
+    &__text {
+      @include breakpoint(mobileonly) {
+        display: none;
+      }
+    }
   }
 }
 </style>

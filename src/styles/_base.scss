@@ -17,7 +17,7 @@
     @media (max-width: 768px)  { @content ; }
   }	
   @else if $point == mobileonly {
-    @media (max-width: 414px)  { @content ; }
+    @media (max-width: 568px)  { @content ; }
   }
 }
 
@@ -25,6 +25,7 @@ $font-title: 'Righteous', cursive;
 
 body {
   padding: 1em;
+  min-height: 100vh;
   background: -webkit-linear-gradient(70deg, #85889C  30%, rgba(0,0,0,0) 30%), -webkit-linear-gradient(30deg, #535970 60%, #5B5C75 60%);
   background: -o-linear-gradient(70deg, #85889C  30%, rgba(0,0,0,0) 30%), -o-linear-gradient(30deg, #535970 60%, #5B5C75 60%);
   background: -moz-linear-gradient(70deg, #85889C  30%, rgba(0,0,0,0) 30%), -moz-linear-gradient(30deg, #535970 60%, #5B5C75 60%);
@@ -128,11 +129,12 @@ body {
   }
 
   @include breakpoint(mobileonly) {
-    margin: .5em 0 1.5em 0;
+    margin: .5em 0;
     font-size: 24px;
   }
 }
 
+//Animation for transition between components
 .slide-fade-enter-active {
   @include transition()
 }
@@ -146,3 +148,46 @@ body {
   opacity: 0;
 }
 
+// Spinner for loading feedback
+@mixin spinner {
+  width: 40px;
+  height: 40px;
+  background-color: #333;
+
+  border-radius: 100%;  
+  -webkit-animation: sk-scaleout 1.0s infinite ease-in-out;
+  animation: sk-scaleout 1.0s infinite ease-in-out;
+}
+
+@-webkit-keyframes sk-scaleout {
+  0% { -webkit-transform: scale(0) }
+  100% {
+    -webkit-transform: scale(1.0);
+    opacity: 0;
+  }
+}
+
+@keyframes sk-scaleout {
+  0% { 
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  } 100% {
+    -webkit-transform: scale(1.0);
+    transform: scale(1.0);
+    opacity: 0;
+  }
+}
+
+//Change colors to progress bar
+#nprogress .bar {
+  background: #000;
+}
+
+#nprogress .peg {
+  box-shadow: 0 0 10px #000, 0 0 5px #000;
+}
+
+#nprogress .spinner-icon {
+  border-top-color: #000;
+  border-left-color: #000;
+}

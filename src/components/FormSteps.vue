@@ -7,17 +7,7 @@
       Make a new query
     </a>
     <transition name="slide-fade" mode="out-in">
-      <section id="step-one" class="container" v-if="currentStep === 1" key="step-one">
-        <h3 class="step__title">
-          Hey, how are you?!?!
-        </h3>
-        <p class="intro__info">
-          I'am GgUser, i like get info!! So if you give me a some info about you i return to you with your profile's info in github =]
-        </p>
-        <button class="button" @click="nextStage">
-          Let's start!?
-        </button>
-      </section>
+      <intro-info v-if="currentStep === 1" key="step-one" />
       <section id="step-two" class="container" v-if="currentStep === 2" key="step-two">
         <h3 class="step__title">
           So, whats is your name? user name on GitHub too, ok?
@@ -124,14 +114,14 @@
             </div>
             <div class="user__info__container">
               <h4 class="user__name">
-                {{user.name}}
+                {{user.name || user.login}}
+                <p class="user__mail">{{userAppMail}}</p>
               </h4>
               <a :href="user.html_url" target="_blank" class="button button--small">
                 View in GitHub
               </a>
               <ul class="user__labels">
                 <li class="user__info" v-if="user.location">{{user.location}}</li>
-                <li class="user__info" v-else>Undefined Location</li>
                 <li class="user__info">{{user.followers}} Followers</li>
                 <li class="user__info">{{user.following}} Following</li>
               </ul>
@@ -147,7 +137,7 @@
                   ({{repos.length}})
                 </span>
               </h4>
-              <ul class="repos__list">
+              <ul class="repos__list" v-if="repos.length > 0">
                 <li class="repos__item" v-for="repo in repos" :key="repo.id">
                   <a :href="repo.html_url" target="_blank" class="repos__link">
                     {{repo.name}}
@@ -159,6 +149,11 @@
                     </p>
                 </li>
               </ul>
+              <p class="repos__tips" v-else>
+                <strong>Ohhh, you don't have repos!</strong> No matter the outcome, working in public is a gift to the community.
+                With every commit, comment, and pull request, you’re creating opportunities for yourself and for
+                others to learn and grow. Think about that =]
+              </p>
             </section>
         </section>
       </section>
@@ -169,18 +164,21 @@
 
 <script>
 import axios from 'axios'
+import { loadProgressBar } from 'axios-progress-bar'
 import { required, email, minLength, sameAs } from 'vuelidate/lib/validators'
+import { mapState } from 'vuex'
+import IntroInfo from '@/components/IntroInfo.vue'
 import OnError from '@/components/OnError.vue'
 
 export default {
   name: 'FormSteps',
   components: {
+    IntroInfo,
     OnError
   },
 
   data () {
     return {
-      step: this.$store.state.currentStep,
       haveInfo: false,
       showError: false,
       user: [],
@@ -197,11 +195,10 @@ export default {
     }
   },
 
-  computed: {
-    currentStep () {
-      return this.$store.state.currentStep
-    }
-  },
+  computed: mapState({
+    currentStep: state => state.currentStep,
+    userAppMail: state => state.userAppInfo.email
+  }),
 
   methods: {
     setUserAppInfo () {
@@ -235,6 +232,7 @@ export default {
     },
 
     getInfo (userName) {
+      loadProgressBar() // Function to call loading bar
       this.setUserAppInfo()
       axios.all([this.getUserInfo(userName), this.getReposInfo(userName)])
         .then(axios.spread((userResponse, reposResponse) => {
@@ -283,18 +281,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import "~styles/base";
-
-.intro__info {
-  font-size: 24px;
-  line-height: 2em;
-  text-align: center;
-  margin: 2em 0;
-
-  @include breakpoint(mobileonly) {
-    margin: 0;
-    line-height: 1.5em;
-  }
-}
 
 .form {
   &__label {
@@ -356,6 +342,10 @@ export default {
     margin: 0 0 2em 0;
     color: #333;
 
+    @include breakpoint(mobileonly) {
+      margin: 0 0 1em 0;
+    }
+
     &--styled-checkbox {
       position: absolute;
       opacity: 0;
@@ -403,16 +393,36 @@ export default {
     }
   }
 
+  &__image__container {
+     position:relative;
+     height: 120px;
+     min-width: 120px;
+     box-shadow: 2px 2px 10px rgba(0,0,0,.5);
+     margin-right: 30px;
+     border-radius: 100%;
+
+    @include breakpoint(mobileonly) {
+      margin: 0 0 1em 0;
+    }
+
+     &:before {
+      @include spinner;
+      content: '';
+      position: absolute;
+      top: calc(50% - 20px);
+      left: calc(50% - 20px);
+      z-index: 1;
+    }
+  }
+
   &__image {
     max-height: 120px;
     width: auto;
     border-radius: 100%;
     box-shadow: 2px 2px 10px rgba(0,0,0,.5);
-    margin-right: 30px;
-
-    @include breakpoint(mobileonly) {
-      margin: 0;
-    }
+    position: relative;
+    z-index: 2;
+    background:#F2F2F2;
   }
 
   &__name {
@@ -422,6 +432,13 @@ export default {
       text-align: center;
       font-size: 26px;
     }
+  }
+
+  &__mail {
+    margin: .4em 0 0 0;
+    font-weight: normal;
+    font-size: 14px;
+    text-decoration: underline;
   }
 
   &__bio {
@@ -475,6 +492,11 @@ export default {
     color: #000;
     font-weight: bold;
     text-decoration: underline;
+  }
+
+  &__tips {
+    font-size: 18px;
+    line-height: 2em;
   }
 }
 

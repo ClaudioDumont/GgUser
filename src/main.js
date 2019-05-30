@@ -5,6 +5,7 @@ import Vuelidate from 'vuelidate'
 import App from './App'
 import store from './store'
 import './styles/_normalize.scss'
+import 'axios-progress-bar/dist/nprogress.css'
 
 Vue.use(Vuelidate)
 Vue.config.productionTip = false
