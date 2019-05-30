@@ -5,5 +5,7 @@ export default {
     lastName: '',
     email: '',
     userName: ''
-  }
+  },
+  userGitInfo: {},
+  reposGitInfo: {}
 }

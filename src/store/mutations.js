@@ -21,5 +21,13 @@ export default {
 
   'CHANGE_USER_APP_INFO' (state, payload) {
     state.userAppInfo = payload
+  },
+
+  'SET_REPOS_INFO' (state, repos) {
+    state.reposGitInfo = repos
+  },
+
+  'SET_USER_INFO' (state, user) {
+    state.userGitInfo = user
   }
 }

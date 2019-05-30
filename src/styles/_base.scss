@@ -84,6 +84,10 @@ body {
     }
   }
 
+  &--mail {
+    word-break: break-word;
+  }
+
   &--back {
     position: absolute;
     top: 20px;
