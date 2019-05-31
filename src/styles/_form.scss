@@ -1,0 +1,112 @@
+@mixin transition($property: all, $duration: 0.2s, $ease: ease-in-out) {
+    -webkit-transition: $property $duration $ease;
+    -moz-transition: $property $duration $ease;
+    -o-transition: $property $duration $ease;
+    transition: $property $duration $ease;
+  }
+  
+  @mixin breakpoint($point) {
+    @if $point == phablet {
+      @media (max-width: 768px)  { @content ; }
+    }	
+    @else if $point == mobileonly {
+      @media (max-width: 568px)  { @content ; }
+    }
+  }
+.form {
+  &__label {
+    display: block;
+    font-size: 16px;
+    font-weight: bold;
+    width: 100%;
+    margin: 0 0 .3em 0;
+    color: #535970;
+    position: relative;
+
+    &--styled-checkbox {
+      position: relative;
+      margin: 2em 0;
+      cursor: pointer;
+
+      &:before {
+        content: '';
+        margin-right: 10px;
+        display: inline-block;
+        vertical-align: text-top;
+        width: 20px;
+        height: 20px;
+        background: white;
+        @include transition();
+      }
+
+      &:hover {
+        &:before {
+          background: #ccc;
+        }
+      }
+    }
+  }
+
+  &__error {
+    color: #ff0000;
+    font-size: 11px;
+    letter-spacing: 1px;
+    font-weight: normal;
+    text-transform: uppercase;
+    position: absolute;
+    top: 20px;
+    right: 5px;
+
+    &--agree {
+    right: auto;
+    top: 15px;
+    left: 35px;
+    }
+  }
+
+  &__input {
+    display: block;
+    border: none;
+    padding: 1em;
+    width: 100%;
+    line-height: 100%;
+    margin: 0 0 2em 0;
+    color: #333;
+
+    @include breakpoint(mobileonly) {
+      margin: 0 0 1em 0;
+    }
+
+    &--styled-checkbox {
+      position: absolute;
+      opacity: 0;
+      width: auto;
+
+      &:checked + .form__label:before {
+        background: #535970;
+      }
+
+      &:checked + .form__label:after {
+        content: '';
+        position: absolute;
+        left: 5px;
+        top: 9px;
+        background: #fff;
+        width: 2px;
+        height: 2px;
+        box-shadow:
+          2px 0 0 #fff,
+          4px 0 0 #fff,
+          4px -2px 0 #fff,
+          4px -4px 0 #fff,
+          4px -6px 0 #fff,
+          4px -8px 0 #fff;
+        transform: rotate(45deg);
+      }
+    }
+  }
+}
+
+.agree__terms {
+  position: relative;
+}

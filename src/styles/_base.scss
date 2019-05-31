@@ -26,11 +26,11 @@ $font-title: 'Righteous', cursive;
 body {
   padding: 1em;
   min-height: 100vh;
+  font-family: 'Open Sans', sans-serif;
   background: -webkit-linear-gradient(70deg, #85889C  30%, rgba(0,0,0,0) 30%), -webkit-linear-gradient(30deg, #535970 60%, #5B5C75 60%);
   background: -o-linear-gradient(70deg, #85889C  30%, rgba(0,0,0,0) 30%), -o-linear-gradient(30deg, #535970 60%, #5B5C75 60%);
   background: -moz-linear-gradient(70deg, #85889C  30%, rgba(0,0,0,0) 30%), -moz-linear-gradient(30deg, #535970 60%, #5B5C75 60%);
   background: linear-gradient(70deg, #85889C  30%, rgba(0,0,0,0) 30%), linear-gradient(30deg, #535970 60%, #5B5C75 60%);
-  font-family: 'Open Sans', sans-serif;
 }
 
 .container{
@@ -152,7 +152,7 @@ body {
   opacity: 0;
 }
 
-// Spinner for loading feedback
+// Spinner for loading feedback - using in user__image
 @mixin spinner {
   width: 40px;
   height: 40px;
@@ -182,16 +182,20 @@ body {
   }
 }
 
-//Change colors to progress bar
-#nprogress .bar {
-  background: #000;
+// Change colors to progress bar
+// Using body tag to overwrite the CSS provide by axios-progress-bar plugin
+body {
+  #nprogress .bar {
+    background: #000;
+  }
+  
+  #nprogress .peg {
+    box-shadow: 0 0 10px #000, 0 0 5px #000;
+  }
+  
+  #nprogress .spinner-icon {
+    border-top-color: #000;
+    border-left-color: #000;
+  }
 }
 
-#nprogress .peg {
-  box-shadow: 0 0 10px #000, 0 0 5px #000;
-}
-
-#nprogress .spinner-icon {
-  border-top-color: #000;
-  border-left-color: #000;
-}

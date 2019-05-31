@@ -29,30 +29,30 @@
         </div>
       </header>
       <section>
-          <h4 class="step__title step__title--secondary">
-            Your Repos
-            <span v-if="reposGitInfo.length > 0">
-              ({{reposGitInfo.length}})
-            </span>
-          </h4>
-          <ul class="repos__list" v-if="reposGitInfo.length > 0">
-            <li class="repos__item" v-for="repo in reposGitInfo" :key="repo.id">
-              <a :href="repo.html_url" target="_blank" class="repos__link">
-                {{repo.name}}
-              </a>
-              <p class="repos__stars">
-                {{repo.stargazers_count}}
-                  <span v-if="repo.stargazers_count <= 1">Star</span>
-                  <span v-if="repo.stargazers_count > 1">Stars</span>
-                </p>
-            </li>
-          </ul>
-          <p class="repos__tips" v-else>
-            <strong>Ohhh, you don't have repos!</strong> No matter the outcome, working in public is a gift to the community.
-            With every commit, comment, and pull request, you’re creating opportunities for yourself and for
-            others to learn and grow. Think about that =]
-          </p>
-        </section>
+        <h4 class="step__title step__title--secondary">
+          Your Repos
+          <span v-if="reposGitInfo.length > 0">
+            ({{reposGitInfo.length}})
+          </span>
+        </h4>
+        <ul class="repos__list" v-if="reposGitInfo.length > 0">
+          <li class="repos__item" v-for="repo in reposGitInfo" :key="repo.id">
+            <a :href="repo.html_url" target="_blank" class="repos__link">
+              {{repo.name}}
+            </a>
+            <p class="repos__stars">
+              {{repo.stargazers_count}}
+                <span v-if="repo.stargazers_count <= 1">Star</span>
+                <span v-if="repo.stargazers_count > 1">Stars</span>
+              </p>
+          </li>
+        </ul>
+        <p class="repos__tips" v-else>
+          <strong>Ohhh, you don't have repos!</strong> No matter the outcome, working in public is a gift to the community.
+          With every commit, comment, and pull request, you’re creating opportunities for yourself and for
+          others to learn and grow. Think about that =]
+        </p>
+      </section>
     </section>
   </section>
 </template>
@@ -108,6 +108,7 @@ export default {
 
   &__image {
     max-height: 120px;
+    padding: 2px;
     width: auto;
     border-radius: 100%;
     box-shadow: 2px 2px 10px rgba(0,0,0,.5);
