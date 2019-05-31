@@ -10,7 +10,7 @@
         </div>
         <div class="user__info__container">
           <h4 class="user__name">
-            {{userGitInfo.name || userGitInfo.login}}
+            {{ userGitInfo.name || userGitInfo.login || userAppName }}
           </h4>
           <a :href="userGitInfo.html_url" target="_blank" class="button button--small">
             View in GitHub
@@ -63,6 +63,7 @@ export default {
   name: 'OnSuccess',
   computed: mapState({
     userAppMail: state => state.userAppInfo.email,
+    userAppName: state => state.userAppInfo.name,
     reposGitInfo: state => state.reposGitInfo,
     userGitInfo: state => state.userGitInfo
   })
