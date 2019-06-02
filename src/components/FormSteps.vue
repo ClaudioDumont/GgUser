@@ -10,7 +10,7 @@
       <intro-info v-if="currentStep === 1" key="step-one" />
       <section id="step-two" class="container" v-if="currentStep === 2" key="step-two">
         <h3 class="step__title">
-          So, whats is your name? user name on GitHub too, ok?
+          So, whats is your name? and user name on GitHub too, ok?
         </h3>
         <section class="form__content">
           <label for="" class="form__label">

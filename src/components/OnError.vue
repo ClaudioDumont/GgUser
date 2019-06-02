@@ -1,7 +1,7 @@
 <template>
   <section class="container" >
     <h3 class="step__title">
-      Something went wrong
+      Something it's not OK
     </h3>
     <img class="error__image" src="../assets/git-cat.png" >
 

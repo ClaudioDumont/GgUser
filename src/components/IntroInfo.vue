@@ -4,7 +4,7 @@
       Hey, how are you?!?!
     </h3>
     <p class="intro__info">
-      I'am GgUser, i like get info!! So if you give me a some info about you i return to you with your profile's info in github =]
+      I'am GgUser, i like get info!! So if you give me some info about you i will return to you with your profile's info in github =]
     </p>
     <button class="button" @click="nextStage">
       Let's start!?
