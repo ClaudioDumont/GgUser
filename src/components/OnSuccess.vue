@@ -108,14 +108,17 @@ export default {
   }
 
   &__image {
-    max-height: 120px;
+    height: 120px;
     padding: 2px;
+    max-width: 100%;
     width: auto;
     border-radius: 100%;
     box-shadow: 2px 2px 10px rgba(0,0,0,.5);
     position: relative;
     z-index: 2;
     background:#F2F2F2;
+    display: block;
+    text-align: center;
   }
 
   &__name {

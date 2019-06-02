@@ -32,7 +32,6 @@ export default {
 
   &__content {
     max-width: 980px;
-    min-height: 680px;
     width: 100%;
     display: flex;
     background: #f2f2f2;
@@ -54,6 +53,15 @@ export default {
   justify-content: center;
   padding: 3em 2em;
   position: relative;
+  min-height: 680px;
+
+  @include breakpoint(phablet) {
+    min-height: auto;
+  }
+
+  @include breakpoint(mobileonly) {
+    min-height: auto;
+  }
 
   &--left {
     width: 40%;
