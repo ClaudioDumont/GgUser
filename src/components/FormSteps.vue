@@ -8,7 +8,8 @@
     </a>
     <transition name="slide-fade" mode="out-in">
       <intro-info v-if="currentStep === 1" key="step-one" />
-      <section id="step-two" class="container" v-if="currentStep === 2" key="step-two">
+      <form-steps-two id="step-two" v-if="currentStep === 2" key="step-two" />
+      <!-- <section id="step-two" class="container" v-if="currentStep === 2" key="step-two">
         <h3 class="step__title">
           So, whats is your name? and user name on GitHub too, ok?
         </h3>
@@ -55,8 +56,9 @@
               Next
           </button>
         </div>
-      </section>
-      <section id="step-three" class="container" v-if="currentStep === 3" key="step-three">
+      </section> -->
+      <form-steps-three  id="step-three" v-if="currentStep === 3" key="step-three" />
+      <!-- <section id="step-three" class="container" v-if="currentStep === 3" key="step-three">
         <h3 class="step__title">
           So far, so good... But i need your email and your agreement to terms of use
         </h3>
@@ -95,14 +97,14 @@
             </button>
 
           <button
-            @click="getInfo(formResponseStepOne.userName)"
+            @click="getInfo(GitUserName)"
             class="button button--medium"
-            v-if="!$v.formResponseStepOne.$invalid && !$v.formResponseStepTwo.$invalid"
+            v-if="!$v.formResponseStepTwo.$invalid"
           >
             Git Info
           </button>
         </div>
-      </section>
+      </section> -->
       <on-success v-if="currentStep === 4 && haveInfo && !showError" key="step-four" />
       <on-error v-if="showError && currentStep === 4" key="show-error" />
     </transition>
@@ -115,6 +117,8 @@ import { loadProgressBar } from 'axios-progress-bar'
 import { required, email, minLength, sameAs } from 'vuelidate/lib/validators'
 import { mapState } from 'vuex'
 import IntroInfo from '@/components/IntroInfo.vue'
+import FormStepsTwo from '@/components/FormStepsTwo.vue'
+import FormStepsThree from '@/components/FormStepsThree.vue'
 import OnError from '@/components/OnError.vue'
 import OnSuccess from '@/components/OnSuccess.vue'
 
@@ -122,6 +126,8 @@ export default {
   name: 'FormSteps',
   components: {
     IntroInfo,
+    FormStepsTwo,
+    FormStepsThree,
     OnError,
     OnSuccess
   },
@@ -143,7 +149,8 @@ export default {
   },
 
   computed: mapState({
-    currentStep: state => state.currentStep
+    currentStep: state => state.currentStep,
+    GitUserName: state => state.userAppInfo.userName
   }),
 
   methods: {
@@ -226,7 +233,7 @@ export default {
   }
 }
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 @import "~styles/base";
 
 .form {
