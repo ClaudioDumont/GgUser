@@ -1,50 +1,49 @@
 <template>
   <section class="container">
     <h3 class="step__title">
-        So far, so good... But i need your email and your agreement to terms of use
+      So far, so good... But i need your email and your agreement to terms of use
     </h3>
     <section class="form__content">
-        <label for="" class="form__label">
+      <label for="" class="form__label">
         E-mail:
         <p class="form__error" v-if="!$v.formResponseStepTwo.email.required">this field is required</p>
         <p class="form__error" v-if="!$v.formResponseStepTwo.email.email">
-            You must be use a valid email account
+          You must be use a valid email account
         </p>
-        </label>
-        <input type="mail"  class="form__input" v-model="$v.formResponseStepTwo.email.$model">
-        <div class="agree__terms">
+      </label>
+      <input type="mail"  class="form__input" v-model="$v.formResponseStepTwo.email.$model">
+      <div class="agree__terms">
         <p
-            class="form__error form__error--agree"
-            v-if="$v.formResponseStepTwo.checkbox.$invalid">
+          class="form__error form__error--agree"
+          v-if="$v.formResponseStepTwo.checkbox.$invalid">
             I need you agree with the terms
         </p>
         <input
-            type="checkbox"
-            id="agree-check"
-            class="form__input form__input--styled-checkbox"
-            v-model="$v.formResponseStepTwo.checkbox.$model"
-            >
+          type="checkbox"
+          id="agree-check"
+          class="form__input form__input--styled-checkbox"
+          v-model="$v.formResponseStepTwo.checkbox.$model"
+        >
         <label for="agree-check" class="form__label form__label--styled-checkbox">
-            I agree with the terms =]
+          I agree with the terms =]
         </label>
-        </div>
+      </div>
     </section>
     <div class="button__container">
-        <button
+      <button
         class="button button--medium"
         @click="prevStage">
-            Prev
-        </button>
+          Prev
+      </button>
 
-        <button
-        @click="getInfo(GitUserName)"
+      <button
+        @click="getInfo(gitUserName)"
         class="button button--medium"
-        v-if="!$v.formResponseStepTwo.$invalid"
-        >
+        v-if="!$v.formResponseStepTwo.$invalid">
         Git Info
-        </button>
+      </button>
     </div>
-    </section>
+ </section>
 </template>
 <script>
 import axios from 'axios'
@@ -64,16 +63,16 @@ export default {
 
   computed: mapState({
     userAppName: state => state.userAppInfo.name,
-    userAppLastName: state => state.userAppInfo.Lastname,
-    GitUserName: state => state.userAppInfo.userName
+    userAppLastName: state => state.userAppInfo.lastName,
+    gitUserName: state => state.userAppInfo.userName
   }),
 
   methods: {
     setUserAppInfo () {
       const payload = {
-        name: '',
-        lastName: '',
-        userName: '',
+        name: this.userAppName,
+        lastName: this.userAppLastName,
+        userName: this.gitUserName,
         email: this.formResponseStepTwo.email
       }
       this.$store.commit('CHANGE_USER_APP_INFO', payload)
@@ -104,12 +103,13 @@ export default {
           this.$store.commit('SET_USER_INFO', userResponse.data)
           this.$store.commit('SET_REPOS_INFO', reposResponse.data)
 
-          this.haveInfo = true
-          this.showError = false
+          this.$store.commit('HAVE_INFO', true)
+          this.$store.commit('SHOW_ERROR', false)
         }))
         .catch((error) => {
           console.log(error)
-          this.showError = true
+          this.$store.commit('SHOW_ERROR', true)
+          this.$store.commit('HAVE_INFO', false)
         })
         .then(() => {
           this.nextStage()

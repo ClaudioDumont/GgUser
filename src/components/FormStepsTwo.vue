@@ -66,7 +66,8 @@ export default {
       const payload = {
         name: this.formResponseStepOne.name,
         lastName: this.formResponseStepOne.lastName,
-        userName: this.formResponseStepOne.userName
+        userName: this.formResponseStepOne.userName,
+        email: ''
       }
       this.$store.commit('CHANGE_USER_APP_INFO', payload)
     },
