@@ -22,6 +22,7 @@ export default {
   methods: {
     getNewUser () {
       this.$store.commit('GO_BACK')
+      this.$router.push({name: 'names'})
     }
   }
 }

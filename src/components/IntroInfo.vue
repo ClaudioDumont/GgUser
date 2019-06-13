@@ -16,6 +16,7 @@ export default {
   name: 'IntroInfo',
   methods: {
     nextStage () {
+      this.$router.push({name: 'names'})
       this.$store.commit('INCREMENT_STEP')
     }
   }

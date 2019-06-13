@@ -74,10 +74,12 @@ export default {
 
     nextStage () {
       this.setUserAppInfo()
+      this.$router.push({name: 'email'})
       this.$store.commit('INCREMENT_STEP')
     },
 
     prevStage () {
+      this.$router.push({name: 'intro'})
       this.$store.commit('DECREMENT_STEP')
     }
   },

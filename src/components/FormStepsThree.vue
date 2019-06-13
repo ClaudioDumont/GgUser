@@ -78,12 +78,8 @@ export default {
       this.$store.commit('CHANGE_USER_APP_INFO', payload)
     },
 
-    nextStage () {
-      this.setUserAppInfo()
-      this.$store.commit('INCREMENT_STEP')
-    },
-
     prevStage () {
+      this.$router.push({name: 'names'})
       this.$store.commit('DECREMENT_STEP')
     },
 
@@ -105,11 +101,14 @@ export default {
 
           this.$store.commit('HAVE_INFO', true)
           this.$store.commit('SHOW_ERROR', false)
+          this.$store.commit('INCREMENT_STEP')
+          this.$router.push({name: 'success'})
         }))
         .catch((error) => {
           console.log(error)
           this.$store.commit('SHOW_ERROR', true)
           this.$store.commit('HAVE_INFO', false)
+          this.$router.push({name: 'error'})
         })
         .then(() => {
           this.nextStage()
