@@ -29,7 +29,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~styles/base";
+//@import "~styles/base";
+@import "~styles/mixins";
 .error {
   &__image {
     max-height: 190px;

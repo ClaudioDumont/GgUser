@@ -24,7 +24,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~styles/base";
+@import "~styles/mixins";
 .intro__info {
   font-size: 24px;
   line-height: 2em;

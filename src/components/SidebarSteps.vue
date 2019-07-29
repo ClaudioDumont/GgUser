@@ -43,7 +43,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~styles/base";
+//@import "~styles/base";
+@import "~styles/mixins";
+@import "~styles/fonts";
 
 .logo {
     background: url('../assets/logo-gguser.png') no-repeat center;

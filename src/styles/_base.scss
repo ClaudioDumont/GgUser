@@ -1,27 +1,9 @@
-@import url('https://fonts.googleapis.com/css?family=Righteous&display=swap');
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap');
+@import "~styles/mixins";
+@import "~styles/fonts";
 
 * {
   box-sizing: border-box;
 }
-
-@mixin transition($property: all, $duration: 0.2s, $ease: ease-in-out) {
-  -webkit-transition: $property $duration $ease;
-  -moz-transition: $property $duration $ease;
-  -o-transition: $property $duration $ease;
-  transition: $property $duration $ease;
-}
-
-@mixin breakpoint($point) {
-  @if $point == phablet {
-    @media (max-width: 768px)  { @content ; }
-  }	
-  @else if $point == mobileonly {
-    @media (max-width: 568px)  { @content ; }
-  }
-}
-
-$font-title: 'Righteous', cursive;
 
 body {
   padding: 1em;
@@ -138,49 +120,6 @@ body {
   }
 }
 
-//Animation for transition between components
-.slide-fade-enter-active {
-  @include transition()
-}
-.slide-fade-leave-active {
-  @include transition()
-}
-
-.slide-fade-enter, 
-.slide-fade-leave-to {
-  transform: translateX(10px);
-  opacity: 0;
-}
-
-// Spinner for loading feedback - using in user__image
-@mixin spinner {
-  width: 40px;
-  height: 40px;
-  background-color: #333;
-
-  border-radius: 100%;  
-  -webkit-animation: sk-scaleout 1.0s infinite ease-in-out;
-  animation: sk-scaleout 1.0s infinite ease-in-out;
-}
-
-@-webkit-keyframes sk-scaleout {
-  0% { -webkit-transform: scale(0) }
-  100% {
-    -webkit-transform: scale(1.0);
-    opacity: 0;
-  }
-}
-
-@keyframes sk-scaleout {
-  0% { 
-    -webkit-transform: scale(0);
-    transform: scale(0);
-  } 100% {
-    -webkit-transform: scale(1.0);
-    transform: scale(1.0);
-    opacity: 0;
-  }
-}
 
 // Change colors to progress bar
 // Using body tag to overwrite the CSS provide by axios-progress-bar plugin

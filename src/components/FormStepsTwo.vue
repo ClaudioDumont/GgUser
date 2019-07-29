@@ -102,5 +102,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~styles/base";
+//@import "~styles/base";
 </style>
