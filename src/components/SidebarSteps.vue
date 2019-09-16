@@ -4,25 +4,25 @@
       GgUser
     </h1>
       <ul class="steps">
-        <li class="steps__item " :class="currentStep == 1 ? 'steps__item--active' : ''">
+        <li class="steps__item " :class="$route.params.id === 'start' ? 'steps__item--active' : ''">
           <p class="steps__item__text">
             Hey YOU!!
           </p>
         </li>
 
-        <li class="steps__item" :class="currentStep == 2 ? 'steps__item--active' : ''">
+        <li class="steps__item" :class="$route.params.id === 'names' ? 'steps__item--active' : ''">
           <p class="steps__item__text">
             A lot of names :)
           </p>
         </li>
 
-        <li class="steps__item" :class="currentStep == 3 ? 'steps__item--active' : ''">
+        <li class="steps__item" :class="$route.params.id === 'email-confirm' ? 'steps__item--active' : ''">
           <p class="steps__item__text">
             Give me your email
           </p>
         </li>
 
-        <li class="steps__item" :class="currentStep == 4 ? 'steps__item--active' : ''">
+        <li class="steps__item" :class="$route.params.id === 'success' ? 'steps__item--active' : ''">
           <p class="steps__item__text">
             This is your Profile
           </p>

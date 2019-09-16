@@ -7,12 +7,6 @@
       Make a new query
     </a>
     <transition name="slide-fade" mode="out-in">
-      <!-- <intro-info v-if="currentStep === 1" key="step-one" />
-      <form-steps-two id="step-two" v-if="currentStep === 2" key="step-two" />
-      <form-steps-three  id="step-three" v-if="currentStep === 3" key="step-three" />
-      <on-success v-if="currentStep === 4 && haveInfo && !showError" key="step-four" />
-      <on-error v-if="showError && currentStep === 4" key="show-error" /> -->
-
       <router-view></router-view>
     </transition>
   </section>
