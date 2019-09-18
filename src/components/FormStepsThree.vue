@@ -55,7 +55,7 @@ export default {
   data () {
     return {
       formResponseStepTwo: {
-        email: '',
+        email: this.$store.getters.userData.email,
         checkbox: ''
       }
     }
@@ -79,6 +79,7 @@ export default {
     },
 
     prevStage () {
+      this.setUserAppInfo()
       this.$router.push({name: 'names'})
       this.$store.commit('DECREMENT_STEP')
     },
@@ -130,6 +131,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-//@import "~styles/base";
-</style>
+<style lang="scss" scoped></style>

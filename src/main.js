@@ -21,11 +21,31 @@ Vue.use(VueRouter)
 Vue.config.productionTip = false
 
 const routes = [
-  { path: '/', name: 'intro', component: IntroInfo },
-  { path: '/names/:step', name: 'names', component: FormStepsTwo },
-  { path: '/email-confirmation/:step', name: 'email', component: FormStepsThree },
-  { path: '/error/:step', name: 'error', component: OnError },
-  { path: '/success/:step', name: 'success', component: OnSuccess }
+  {
+    path: '/',
+    name: 'intro',
+    component: IntroInfo
+  },
+  {
+    path: '/names',
+    name: 'names',
+    component: FormStepsTwo
+  },
+  {
+    path: '/email-confirmation',
+    name: 'email',
+    component: FormStepsThree
+  },
+  {
+    path: '/error',
+    name: 'error',
+    component: OnError
+  },
+  {
+    path: '/success',
+    name: 'success',
+    component: OnSuccess
+  }
 ]
 
 // 3. Create the router instance and pass the `routes` option

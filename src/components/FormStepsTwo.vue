@@ -55,9 +55,9 @@ export default {
   data () {
     return {
       formResponseStepOne: {
-        name: '',
-        lastName: '',
-        userName: ''
+        name: this.$store.getters.userData.name,
+        lastName: this.$store.getters.userData.lastName,
+        userName: this.$store.getters.userData.userName
       }
     }
   },
@@ -67,7 +67,7 @@ export default {
         name: this.formResponseStepOne.name,
         lastName: this.formResponseStepOne.lastName,
         userName: this.formResponseStepOne.userName,
-        email: ''
+        email: this.$store.getters.userData.email
       }
       this.$store.commit('CHANGE_USER_APP_INFO', payload)
     },
@@ -101,6 +101,4 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-//@import "~styles/base";
-</style>
+<style lang="scss" scoped></style>
