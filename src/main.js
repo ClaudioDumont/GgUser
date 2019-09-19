@@ -34,17 +34,44 @@ const routes = [
   {
     path: '/email-confirmation',
     name: 'email',
-    component: FormStepsThree
+    component: FormStepsThree,
+    beforeEnter (to, from, next) {
+      if (store.getters.userData.name && store.getters.userData.lastName && store.getters.userData.userName) {
+        next()
+      } else {
+        next({
+          name: 'names'
+        })
+      }
+    }
   },
   {
     path: '/error',
     name: 'error',
-    component: OnError
+    component: OnError,
+    beforeEnter (to, from, next) {
+      if (store.getters.userData.name && store.getters.userData.lastName && store.getters.userData.userName) {
+        next()
+      } else {
+        next({
+          name: 'names'
+        })
+      }
+    }
   },
   {
     path: '/success',
     name: 'success',
-    component: OnSuccess
+    component: OnSuccess,
+    beforeEnter (to, from, next) {
+      if (store.getters.userData.name && store.getters.userData.lastName && store.getters.userData.userName) {
+        next()
+      } else {
+        next({
+          name: 'names'
+        })
+      }
+    }
   }
 ]
 

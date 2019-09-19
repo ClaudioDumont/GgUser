@@ -84,6 +84,11 @@ export default {
       this.$store.commit('DECREMENT_STEP')
     },
 
+    nextStage () {
+      this.$router.push({name: 'success'})
+      this.$store.commit('INCREMENT_STEP')
+    },
+
     getUserInfo (userName) {
       return axios.get(`https://api.github.com/users/${userName}`)
     },
