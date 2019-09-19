@@ -71,7 +71,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~styles/base";
+//@import "~styles/base";
+@import "~styles/mixins";
 .user {
   &__header {
     display: flex;

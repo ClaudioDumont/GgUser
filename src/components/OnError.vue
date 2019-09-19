@@ -22,13 +22,15 @@ export default {
   methods: {
     getNewUser () {
       this.$store.commit('GO_BACK')
+      this.$router.push({name: 'names'})
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-@import "~styles/base";
+//@import "~styles/base";
+@import "~styles/mixins";
 .error {
   &__image {
     max-height: 190px;

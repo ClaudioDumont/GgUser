@@ -16,6 +16,7 @@ export default {
   name: 'IntroInfo',
   methods: {
     nextStage () {
+      this.$router.push({name: 'names', params: { step: 'names' }})
       this.$store.commit('INCREMENT_STEP')
     }
   }
@@ -23,7 +24,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import "~styles/base";
+@import "~styles/mixins";
 .intro__info {
   font-size: 24px;
   line-height: 2em;

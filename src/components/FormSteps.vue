@@ -7,114 +7,16 @@
       Make a new query
     </a>
     <transition name="slide-fade" mode="out-in">
-      <intro-info v-if="currentStep === 1" key="step-one" />
-      <section id="step-two" class="container" v-if="currentStep === 2" key="step-two">
-        <h3 class="step__title">
-          So, whats is your name? and user name on GitHub too, ok?
-        </h3>
-        <section class="form__content">
-          <label for="" class="form__label">
-            Name:
-            <p class="form__error" v-if="!$v.formResponseStepOne.name.required">this field is required</p>
-            <p
-              class="form__error"
-              v-if="!$v.formResponseStepOne.name.minLength">
-                Field must have at least {{ $v.formResponseStepOne.name.$params.minLength.min }} characters.
-            </p>
-          </label>
-          <input
-            type="text"
-            v-model="$v.formResponseStepOne.name.$model"
-            class="form__input">
-          <label for="" class="form__label">
-            Last Name:
-            <p class="form__error" v-if="!$v.formResponseStepOne.lastName.required">this field is required</p>
-            <p
-              class="form__error"
-              v-if="!$v.formResponseStepOne.lastName.minLength">
-                Field must have at least {{ $v.formResponseStepOne.lastName.$params.minLength.min }} characters.
-            </p>
-          </label>
-          <input type="text" v-model="$v.formResponseStepOne.lastName.$model" class="form__input">
-          <label for="" class="form__label">
-            UserName on GitHub:
-            <p class="form__error" v-if="!$v.formResponseStepOne.userName.required">this field is required</p>
-          </label>
-          <input type="text" v-model="$v.formResponseStepOne.userName.$model"  class="form__input">
-        </section>
-        <div class="button__container">
-          <button
-            class="button button--medium"
-            @click="prevStage">
-              Prev
-            </button>
-          <button
-            class="button button--medium"
-            @click="nextStage"
-            v-if="!$v.formResponseStepOne.$invalid">
-              Next
-          </button>
-        </div>
-      </section>
-      <section id="step-three" class="container" v-if="currentStep === 3" key="step-three">
-        <h3 class="step__title">
-          So far, so good... But i need your email and your agreement to terms of use
-        </h3>
-        <section class="form__content">
-          <label for="" class="form__label">
-            E-mail:
-            <p class="form__error" v-if="!$v.formResponseStepTwo.email.required">this field is required</p>
-            <p
-              class="form__error" v-if="!$v.formResponseStepTwo.email.email">
-                You must be use a valid email account
-            </p>
-          </label>
-          <input type="mail"  class="form__input" v-model="$v.formResponseStepTwo.email.$model">
-          <div class="agree__terms">
-            <p
-              class="form__error form__error--agree"
-              v-if="$v.formResponseStepTwo.checkbox.$invalid">
-              I need you agree with the terms
-            </p>
-            <input
-              type="checkbox"
-              id="agree-check"
-              class="form__input form__input--styled-checkbox"
-              v-model="$v.formResponseStepTwo.checkbox.$model"
-              >
-            <label for="agree-check" class="form__label form__label--styled-checkbox">
-              I agree with the terms =]
-            </label>
-          </div>
-        </section>
-        <div class="button__container">
-          <button
-            class="button button--medium"
-            @click="prevStage">
-              Prev
-            </button>
-
-          <button
-            @click="getInfo(formResponseStepOne.userName)"
-            class="button button--medium"
-            v-if="!$v.formResponseStepOne.$invalid && !$v.formResponseStepTwo.$invalid"
-          >
-            Git Info
-          </button>
-        </div>
-      </section>
-      <on-success v-if="currentStep === 4 && haveInfo && !showError" key="step-four" />
-      <on-error v-if="showError && currentStep === 4" key="show-error" />
+      <router-view></router-view>
     </transition>
   </section>
 </template>
 
 <script>
-import axios from 'axios'
-import { loadProgressBar } from 'axios-progress-bar'
-import { required, email, minLength, sameAs } from 'vuelidate/lib/validators'
 import { mapState } from 'vuex'
 import IntroInfo from '@/components/IntroInfo.vue'
+import FormStepsTwo from '@/components/FormStepsTwo.vue'
+import FormStepsThree from '@/components/FormStepsThree.vue'
 import OnError from '@/components/OnError.vue'
 import OnSuccess from '@/components/OnSuccess.vue'
 
@@ -122,112 +24,28 @@ export default {
   name: 'FormSteps',
   components: {
     IntroInfo,
+    FormStepsTwo,
+    FormStepsThree,
     OnError,
     OnSuccess
   },
 
-  data () {
-    return {
-      haveInfo: false,
-      showError: false,
-      formResponseStepOne: {
-        name: '',
-        lastName: '',
-        userName: ''
-      },
-      formResponseStepTwo: {
-        email: '',
-        checkbox: ''
-      }
-    }
-  },
-
   computed: mapState({
-    currentStep: state => state.currentStep
+    currentStep: state => state.currentStep,
+    haveInfo: state => state.haveInfo,
+    showError: state => state.showError
   }),
 
   methods: {
-    setUserAppInfo () {
-      const payload = {
-        name: this.formResponseStepOne.name,
-        lastName: this.formResponseStepOne.lastName,
-        userName: this.formResponseStepOne.userName,
-        email: this.formResponseStepTwo.email
-      }
-      this.$store.commit('CHANGE_USER_APP_INFO', payload)
-    },
-
-    nextStage () {
-      this.$store.commit('INCREMENT_STEP')
-    },
-
-    prevStage () {
-      this.$store.commit('DECREMENT_STEP')
-    },
-
     goBack () {
       this.$store.commit('GO_BACK')
-    },
-
-    getUserInfo (userName) {
-      return axios.get(`https://api.github.com/users/${userName}`)
-    },
-
-    getReposInfo (userName) {
-      return axios.get(`https://api.github.com/users/${userName}/repos`)
-    },
-
-    getInfo (userName) {
-      loadProgressBar() // Function to call loading bar
-      this.setUserAppInfo()
-      axios.all([this.getUserInfo(userName), this.getReposInfo(userName)])
-        .then(axios.spread((userResponse, reposResponse) => {
-          this.$store.commit('SET_USER_INFO', userResponse.data)
-          this.$store.commit('SET_REPOS_INFO', reposResponse.data)
-
-          this.haveInfo = true
-          this.showError = false
-        }))
-        .catch((error) => {
-          console.log(error)
-          this.showError = true
-        })
-        .then(() => {
-          this.nextStage()
-        })
-    }
-  },
-
-  validations: {
-    formResponseStepOne: {
-      name: {
-        required,
-        minLength: minLength(3)
-      },
-      lastName: {
-        required,
-        minLength: minLength(3)
-      },
-      userName: {
-        required
-      }
-    },
-
-    formResponseStepTwo: {
-      email: {
-        required,
-        email
-      },
-      checkbox: {
-        required,
-        sameAs: sameAs(() => true)
-      }
+      this.$router.push({name: 'names'})
     }
   }
 }
 </script>
-<style lang="scss" scoped>
-@import "~styles/base";
+<style lang="scss">
+@import "~styles/mixins";
 
 .form {
   &__label {

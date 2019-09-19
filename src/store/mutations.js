@@ -1,6 +1,10 @@
 export default {
-  'CHANGE_STEP' (state, newValue) {
-    state.currentStep = newValue
+  'HAVE_INFO' (state, newValue) {
+    state.haveInfo = newValue
+  },
+
+  'SHOW_ERROR' (state, newValue) {
+    state.showError = newValue
   },
 
   'INCREMENT_STEP' (state) {

@@ -4,25 +4,25 @@
       GgUser
     </h1>
       <ul class="steps">
-        <li class="steps__item " :class="currentStep == 1 ? 'steps__item--active' : ''">
+        <li class="steps__item " :class="$route.name === 'intro' ? 'steps__item--active' : ''">
           <p class="steps__item__text">
             Hey YOU!!
           </p>
         </li>
 
-        <li class="steps__item" :class="currentStep == 2 ? 'steps__item--active' : ''">
+        <li class="steps__item" :class="$route.name === 'names' ? 'steps__item--active' : ''">
           <p class="steps__item__text">
             A lot of names :)
           </p>
         </li>
 
-        <li class="steps__item" :class="currentStep == 3 ? 'steps__item--active' : ''">
+        <li class="steps__item" :class="$route.name === 'email' ? 'steps__item--active' : ''">
           <p class="steps__item__text">
             Give me your email
           </p>
         </li>
 
-        <li class="steps__item" :class="currentStep == 4 ? 'steps__item--active' : ''">
+        <li class="steps__item" :class="$route.name === 'success' ? 'steps__item--active' : ''">
           <p class="steps__item__text">
             This is your Profile
           </p>
@@ -39,11 +39,14 @@ export default {
       return this.$store.state.currentStep
     }
   }
+
 }
 </script>
 
 <style lang="scss" scoped>
-@import "~styles/base";
+//@import "~styles/base";
+@import "~styles/mixins";
+@import "~styles/fonts";
 
 .logo {
     background: url('../assets/logo-gguser.png') no-repeat center;
