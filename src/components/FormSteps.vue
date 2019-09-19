@@ -45,7 +45,6 @@ export default {
 }
 </script>
 <style lang="scss">
-//@import "~styles/base";
 @import "~styles/mixins";
 
 .form {
